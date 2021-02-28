@@ -23,7 +23,7 @@ fun getPartyCode(bic: String): String {
     val re = Regex(pattern = "^....(..)00[012]$")
     var res = re.find(bic)
     return if ( res != null ) {
-        "0" + res.groupValues.get(1)
+        "0${res.groupValues[1]}"
     } else {
         bic.substring(6,9)
     }
