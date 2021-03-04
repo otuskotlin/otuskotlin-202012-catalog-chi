@@ -1,0 +1,24 @@
+rootProject.name = "ok-catalog"
+
+pluginManagement {
+    //этот блок позволяет указать версии из gradle.properties
+    //указание версий необходимо для единой политики применения версий плагинов во всех подпроектах
+    val kotlinVersion: String by settings
+    //val openapiVersion: String by settings
+
+    plugins {
+        //вынесено сюда в связи с тем, что на уровне build.gradle.kts
+        //невозможно считывание версий из settings
+        //в корневом build.gradle.kts plugins можно не перечислять,
+        //но при определенных обстоятельствах возможны конфликты (т.е. как бы намек, что нужно перечислить)
+        kotlin("multiplatform") version kotlinVersion
+        kotlin("jvm") version kotlinVersion
+        kotlin("js") version kotlinVersion
+        //kotlin("plugin.serialization") version kotlinVersion
+
+        //id("org.openapi.generator") version openapiVersion
+    }
+}
+
+include("ok-catalog-be-common")
+include("ok-catalog-common-mp")
