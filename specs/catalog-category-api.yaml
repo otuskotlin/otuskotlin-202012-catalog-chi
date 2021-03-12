@@ -31,7 +31,86 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpRequestCategoryList'
-
+  /category/create:
+    post:
+      tags:
+        - Category
+      summary: Создание категории
+      operationId: categoryCreate
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryCreate'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryCreate'
+  /category/read:
+    post:
+      tags:
+        - Category
+      summary: Чтение категории
+      operationId: categoryRead
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryRead'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryRead'
+  /category/update:
+    post:
+      tags:
+        - Category
+      summary: Изменение категории
+      operationId: сategoryUpdate
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryUpdate'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryUpdate'
+  /category/delete:
+    post:
+      tags:
+        - Category
+      summary: Удаление категории
+      operationId: categoryDelete
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryDelete'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryDelete'
 components:
   schemas:
     MpCategoryCreate:
@@ -61,7 +140,6 @@ components:
               type: string
               title: Ссылка на вышестоящую категорию
               example: 'cat-145'
-
     MpCategoryUpdate:
       title: Изменение категории
       allOf:
@@ -72,8 +150,6 @@ components:
               type: string
               title: id категории
               example: 'cat-57'
-
-
     MpCategory:
       title: Категория
       allOf:
@@ -88,7 +164,79 @@ components:
               type: boolean
               title: Признак категории нижнего уровня
               example: false
+    MpRequestCategoryCreate:
+      title: Запрос создания Категории
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            createData:
+              $ref: '#/components/schemas/MpCategoryCreate'
 
+    MpResponseCategoryCreate:
+      title: Ответ на запрос создания Категории
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    MpRequestCategoryRead:
+      title: Запрос получения Категории
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            categoryId:
+              type: string
+              example: 'cat-57'
+
+    MpResponseCategoryRead:
+      title: Ответ на запрос получения Категории
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    MpRequestCategoryUpdate:
+      title: Запрос изменения Категории
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            updateData:
+              $ref: '#/components/schemas/MpCategoryUpdate'
+
+    MpResponseCategoryUpdate:
+      title: Ответ на запрос изменения Категории
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    MpRequestCategoryDelete:
+      title: Запрос удаления Категории
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            categoryId:
+              type: string
+              example: 'cat-57'
+
+    MpResponseCategoryDelete:
+      title: Ответ на запрос удаления Категории
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
     MpRequestCategoryList:
       title: Запрос списка Категорий
       allOf:
@@ -111,29 +259,13 @@ components:
                 parentId:
                   type: string
                   example: 'cat-57'
-
-#    MpResponseCategoryList:
-#      title: Ответ на запрос списка Категорий
-#      allOf:
-#        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
-#        - type: object
-#          properties:
-#            categorys:
-#              type: array
-#              items:
-#                $ref: '#/components/schemas/MpCategory'
-#    EMpCategoryType:
-#      title: Перечисление типов категорий
-#      allOf:
-#        - type: object
-#          title: Перечисление типов категорий
-#          properties:
-#            type:
-#              type: string
-#              title: Тип категории
-#              enum:
-#                - MARKETPLACE
-#                - PRODUCTION
-#                - APPLICATION
-#                - BRAND
-#              example: 'PRODUCTION'
+    MpResponseCategoryList:
+      title: Ответ на запрос списка Категорий
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            categorys:
+              type: array
+              items:
+                $ref: '#/components/schemas/MpCategory'

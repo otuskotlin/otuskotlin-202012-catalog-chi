@@ -1,0 +1,179 @@
+openapi: 3.0.3
+info:
+  title: Catalog
+  description: Сервис Catalog для Marketplace
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080/v1'
+tags:
+  - name: Category
+    description: Работа с Категориями
+  - name: Classification
+    description: Работа с Классификациями
+paths:
+  /сlassification/list:
+    post:
+      tags:
+        - Classification
+      summary: Получить список классификаций
+      operationId: сlassificationList
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestClassificationList'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseClassificationList'
+  /сlassification/create:
+    post:
+      tags:
+        - Classification
+      summary: Создание Классификации
+      operationId: сlassificationCreate
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestClassificationCreate'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseClassificationCreate'
+  /сlassification/delete:
+    post:
+      tags:
+        - Classification
+      summary: Удаление Классификации
+      operationId: сlassificationDelete
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestClassificationDelete'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseClassificationDelete'
+components:
+  schemas:
+    MpClassificationCreate:
+      title: Создание Классификации
+      allOf:
+        - type: object
+          title: Создание Классификации
+          properties:
+            productId:
+              type: string
+              title: id продукта
+              example: 'prod-76'
+            categoryId:
+              type: string
+              title: id категории
+              example: 'cat-57'
+
+    MpClassificationUpdate:
+      title: Изменение Классификации
+      allOf:
+        - $ref: '#/components/schemas/MpClassificationCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+              title: id Классификации
+              example: cls-57'
+
+    MpClassification:
+      title: Классификация
+      allOf:
+        - $ref: '#/components/schemas/MpClassificationUpdate'
+
+    MpClassificationListItem:
+      title: Элемент списка Классификаций
+      allOf:
+        - $ref: '#/components/schemas/MpClassificationUpdate'
+        - type: object
+          properties:
+            classificationPath:
+              type: array
+              items:
+                $ref: './catalog-category-api.yaml#/components/schemas/MpCategory'
+
+    MpRequestClassificationCreate:
+      title: Запрос создания Классификации
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            createData:
+              $ref: '#/components/schemas/MpClassificationCreate'
+
+    MpResponseClassificationCreate:
+      title: Ответ на запрос создания Классификации
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            classification:
+              $ref: '#/components/schemas/MpClassification'
+
+    MpRequestClassificationDelete:
+      title: Запрос удаления Классификации
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            classificationId:
+              type: string
+              example: 'cat-57'
+
+    MpResponseClassificationDelete:
+      title: Ответ на запрос удаления Классификации
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            classification:
+              $ref: '#/components/schemas/MpClassification'
+
+    MpRequestClassificationList:
+      title: Запрос списка Категорий
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            filterData:
+                type: object
+                title: Параметры фильтра
+                properties:
+                  productId:
+                    type: string
+                    example: 'prod-76'
+
+    MpResponseClassificationList:
+      title: Ответ на запрос списка Категорий
+      allOf:
+        - $ref: './catalog-base-api.yaml#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            categorys:
+              type: array
+              items:
+                $ref: '#/components/schemas/MpClassificationListItem'
+
