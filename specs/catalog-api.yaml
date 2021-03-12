@@ -1,0 +1,403 @@
+openapi: 3.0.3
+info:
+  title: Catalog
+  description: Сервис Catalog для Marketplace
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080/v1'
+tags:
+  - name: Category
+    description: Работа с категориями
+paths:
+  /category/list:
+    post:
+      tags:
+        - Category
+      summary: Получить список категорий
+      operationId: categoryList
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryList'
+        #            examples:
+        #              application/json:
+        #                $ref: '#/components/examples/RequestCategoryListExample'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryList'
+  #              examples:
+  #                ok:
+  #                  $ref: '#/components/examples/ResponseCategoryListExampleOk'
+
+  /category/create:
+    post:
+      tags:
+        - Category
+      summary: Создание категории
+      operationId: categoryCreate
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryCreate'
+        #            examples:
+        #              application/json:
+        #                $ref: '#/components/examples/MpRequestCategoryCreateExample'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryCreate'
+  #              examples:
+  #                application/json:
+  #                  $ref: '#/components/examples/ResponseCategoryCreateExampleOk'
+
+  /category/read:
+    post:
+      tags:
+        - Category
+      summary: Чтение категории
+      operationId: categoryRead
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryRead'
+        #            examples:
+        #              application/json:
+        #                $ref: '#/components/examples/RequestCategoryReadExample'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryRead'
+  #              examples:
+  #                application/json:
+  #                  $ref: '#/components/examples/ResponseCategoryReadExampleOk'
+
+  /category/update:
+    post:
+      tags:
+        - Category
+      summary: Изменение категории
+      operationId: сategoryUpdate
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryUpdate'
+        #            examples:
+        #              application/json:
+        #                $ref: '#/components/examples/RequestCategoryUpdateExample'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryUpdate'
+  #              examples:
+  #                application/json:
+  #                  $ref: '#/components/examples/ResponseCategoryUpdateExampleOk'
+
+  /category/delete:
+    post:
+      tags:
+        - Category
+      summary: Удаление категории
+      operationId: categoryDelete
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestCategoryDelete'
+        #            examples:
+        #              application/json:
+        #                $ref: '#/components/examples/RequestCategoryDeleteExample'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseCategoryDelete'
+#              examples:
+#                application/json:
+#                  $ref: '#/components/examples/ResponseCategoryDeleteExampleOk'
+components:
+  schemas:
+    MpBaseMessage:
+      title: Базовые реквизиты сообщения
+      type: object
+      properties:
+        type:
+          type: string
+          title: Тип запроса
+          description: Идентификатор типа запроса. Используется в качестве дескриминатора при десериализации.
+            Наиболее востребован при пересылке через Websocket и другие транспорты без явного выделения канала.
+      discriminator:
+        propertyName: type
+
+    MpRequestBase:
+      title: Базовые реквизиты запроса
+      allOf:
+        - $ref: '#/components/schemas/MpBaseMessage'
+        - type: object
+          properties:
+            requestId:
+              type: string
+              title: Идентификатор запроса
+              description: Уникальный идентификатор запроса для мониторинга прохождения запроса по бэкенд-инфраструктуре
+              example: 'f1a4a143-1985-4f3b-95d2-77ba48dc1b86'
+            onResponse:
+              type: string
+              title: Сформирован на response.id
+              description: Идентификатор ответа, на который сформирован текущий запрос
+              example: '870db958-9e56-47b9-8bdf-2203a938f9b0'
+            timeStart:
+              type: string
+              title: Время создания запроса
+              example: '2021-03-12 20:29:00'
+            debug:
+              type: object
+              title: Отладочные параметры запроса
+
+    MpResponseBase:
+      title: Базовые реквизиты ответа
+      allOf:
+        - $ref: '#/components/schemas/MpBaseMessage'
+        - type: object
+          properties:
+            responseId:
+              type: string
+              title: Идентификатор запроса
+              description: Уникальный идентификатор запроса для мониторинга прохождения запроса по бэкенд-инфраструктуре
+              example: '870db958-9e56-47b9-8bdf-2203a938f9b0'
+            onRequest:
+              type: string
+              title: Сформирован на request.id
+              description: Идентификатор запроса, на который сформирован текущий ответ
+              example: 'f1a4a143-1985-4f3b-95d2-77ba48dc1b86'
+            endTime:
+              type: string
+              title: Время завершения выполнения запроса
+              example: '2021-03-12 20:29:00'
+            errors:
+              type: object
+              title: Ошибки
+            status:
+              type: string
+              title: Статус завершения
+              example: 'SUCCESS'
+              enum:
+                - SUCCESS
+                - BAD_REQUEST
+                - NOT_FOUND
+            debug:
+              type: object
+              title: Параметры отладки
+
+    MpCategoryCreate:
+      title: Создание категории
+      allOf:
+        - type: object
+          title: Создание категории
+          properties:
+            title:
+              type: string
+              title: Название
+              example: 'Производство металлообрабатывающего оборудования'
+            code:
+              type: string
+              title: Код
+              example: '28.41'
+        - $ref: '#/components/schemas/EMpCategoryType'
+        - type: object
+          title: Создание категории
+          properties:
+            upRefId:
+              type: string
+              title: Ссылка на вышестоящую категорию
+              example: 'cat-145'
+
+    MpCategoryUpdate:
+      title: Изменение категории
+      allOf:
+        - $ref: '#/components/schemas/MpCategoryCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+              title: id категории
+              example: 'cat-57'
+    MpCategory:
+      title: Категория
+      allOf:
+        - $ref: '#/components/schemas/MpCategoryUpdate'
+        - type: object
+          properties:
+            isRoot:
+              type: boolean
+              title: Признак категории верхнего уровня
+              example: false
+            isLeaf:
+              type: boolean
+              title: Признак категории нижнего уровня
+              example: false
+
+    MpRequestCategoryList:
+      title: Запрос списка Категорий
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            filterData:
+              allOf:
+                - $ref: '#/components/schemas/EMpCategoryType'
+                - type: object
+                  title: Параметры фильтра
+                  properties:
+                    parentId:
+                      type: string
+                      example: 'cat-57'
+
+    MpResponseCategoryList:
+      title: Ответ на запрос списка Категорий
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            categorys:
+              type: array
+              items:
+                $ref: '#/components/schemas/MpCategory'
+
+    #    MpCategoryListFilter:
+    #      title: Фильтр для поиска Категорий
+    #      allOf:
+    #        - $ref: '#/components/schemas/MpItemFilter'
+
+    MpRequestCategoryCreate:
+      title: Запрос создания Категории
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            createData:
+              $ref: '#/components/schemas/MpCategoryCreate'
+
+    MpResponseCategoryCreate:
+      title: Ответ на запрос создания Категории
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    MpRequestCategoryRead:
+      title: Запрос получения Категории
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            categoryId:
+              type: string
+              example: 'cat-57'
+
+    MpResponseCategoryRead:
+      title: Ответ на запрос информации о Категории
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+
+    MpRequestCategoryUpdate:
+      title: Запрос изменения Категории
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            updateData:
+              $ref: '#/components/schemas/MpCategoryUpdate'
+
+    MpResponseCategoryUpdate:
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    MpRequestCategoryDelete:
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            categoryId:
+              type: string
+              example: 'cat-57'
+
+    MpResponseCategoryDelete:
+      title: Ответ на запрос удаления Категории
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    EMpCategoryType:
+      title: Перечисление типов категорий
+      allOf:
+        - type: object
+          title: Перечисление типов категорий
+          properties:
+            type:
+              type: string
+              title: Тип категории
+              enum:
+                - MARKETPLACE
+                - PRODUCTION
+                - APPLICATION
+                - BRAND
+              example: 'PRODUCTION'
+
+
+    EMpCategoryType2:
+      title: Перечисление типов категорий
+      allOf:
+        - type: object
+          title: Перечисление типов категорий
+          properties:
+            type:
+              type: string
+              title: Тип категории
+              enum:
+                - MARKETPLACE
+                - PRODUCTION
+                - APPLICATION
+                - BRAND
+              example: 'PRODUCTION'
