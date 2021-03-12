@@ -287,10 +287,15 @@ components:
               type: string
               title: Код
               example: '28.41'
-        - $ref: '#/components/schemas/EMpCategoryType'
-        - type: object
-          title: Создание категории
-          properties:
+            type:
+              type: string
+              title: Тип категории
+              enum:
+                - MARKETPLACE
+                - PRODUCTION
+                - APPLICATION
+                - BRAND
+              example: 'PRODUCTION'
             upRefId:
               type: string
               title: Ссылка на вышестоящую категорию
@@ -426,11 +431,18 @@ components:
         - type: object
           properties:
             filterData:
-              allOf:
-                - $ref: '#/components/schemas/EMpCategoryType'
-                - type: object
-                  title: Параметры фильтра
-                  properties:
+              type: object
+              title: Параметры фильтра
+              properties:
+                type:
+                  type: string
+                  title: Тип категории
+                  enum:
+                    - MARKETPLACE
+                    - PRODUCTION
+                    - APPLICATION
+                    - BRAND
+                  example: 'PRODUCTION'
                     parentId:
                       type: string
                       example: 'cat-57'
@@ -445,26 +457,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MpCategory'
-
-    ########################################
-    # Category перечисления
-    ########################################
-
-    EMpCategoryType:
-      title: Перечисление типов категорий
-      allOf:
-        - type: object
-          title: Перечисление типов категорий
-          properties:
-            type:
-              type: string
-              title: Тип категории
-              enum:
-                - MARKETPLACE
-                - PRODUCTION
-                - APPLICATION
-                - BRAND
-              example: 'PRODUCTION'
 
 
     ########################################
