@@ -7,8 +7,15 @@ servers:
   - url: 'https://localhost:8080/v1'
 tags:
   - name: Category
-    description: Работа с категориями
+    description: Работа с Категориями
+  - name: Classification
+    description: Работа с Классификациями
 paths:
+
+  ########################################
+  # Точки доступа к Категориям
+  ########################################
+
   /category/list:
     post:
       tags:
@@ -113,8 +120,79 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryDelete'
+
+  ########################################
+  # Точки доступа к классификациям
+  ########################################
+
+  /сlassification/list:
+    post:
+      tags:
+        - Classification
+      summary: Получить список классификаций
+      operationId: сlassificationList
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestClassificationList'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseClassificationList'
+
+  /сlassification/create:
+    post:
+      tags:
+        - Classification
+      summary: Создание Классификации
+      operationId: сlassificationCreate
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestClassificationCreate'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseClassificationCreate'
+
+  /сlassification/delete:
+    post:
+      tags:
+        - Classification
+      summary: Удаление Классификации
+      operationId: сlassificationDelete
+      requestBody:
+        description: Запрос
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MpRequestClassificationDelete'
+        required: true
+      responses:
+        200:
+          description: Успех
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MpResponseClassificationDelete'
+
 components:
   schemas:
+    ########################################
+    # Базовые типы сообщений
+    ########################################
     MpBaseMessage:
       title: Базовые реквизиты сообщения
       type: object
@@ -124,6 +202,8 @@ components:
           title: Тип запроса
           description: Идентификатор типа запроса. Используется в качестве дескриминатора при десериализации.
             Наиболее востребован при пересылке через Websocket и другие транспорты без явного выделения канала.
+      required:
+        - type
       discriminator:
         propertyName: type
 
@@ -186,6 +266,10 @@ components:
               type: object
               title: Параметры отладки
 
+    ########################################
+    # Category модели
+    ########################################
+
     MpCategoryCreate:
       title: Создание категории
       allOf:
@@ -209,6 +293,7 @@ components:
               title: Ссылка на вышестоящую категорию
               example: 'cat-145'
 
+
     MpCategoryUpdate:
       title: Изменение категории
       allOf:
@@ -219,6 +304,8 @@ components:
               type: string
               title: id категории
               example: 'cat-57'
+
+
     MpCategory:
       title: Категория
       allOf:
@@ -233,6 +320,101 @@ components:
               type: boolean
               title: Признак категории нижнего уровня
               example: false
+
+    ########################################
+    # Category Create
+    ########################################
+
+    MpRequestCategoryCreate:
+      title: Запрос создания Категории
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            createData:
+              $ref: '#/components/schemas/MpCategoryCreate'
+
+    MpResponseCategoryCreate:
+      title: Ответ на запрос создания Категории
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    ########################################
+    # Category Read
+    ########################################
+
+    MpRequestCategoryRead:
+      title: Запрос получения Категории
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            categoryId:
+              type: string
+              example: 'cat-57'
+
+    MpResponseCategoryRead:
+      title: Ответ на запрос получения Категории
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+
+    ########################################
+    # Category Update
+    ########################################
+
+    MpRequestCategoryUpdate:
+      title: Запрос изменения Категории
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            updateData:
+              $ref: '#/components/schemas/MpCategoryUpdate'
+
+    MpResponseCategoryUpdate:
+      title: Ответ на запрос изменения Категории
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    ########################################
+    # Category Delete
+    ########################################
+
+    MpRequestCategoryDelete:
+      title: Запрос удаления Категории
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            categoryId:
+              type: string
+              example: 'cat-57'
+
+    MpResponseCategoryDelete:
+      title: Ответ на запрос удаления Категории
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            category:
+              $ref: '#/components/schemas/MpCategory'
+
+    ########################################
+    # Category List
+    ########################################
 
     MpRequestCategoryList:
       title: Запрос списка Категорий
@@ -261,78 +443,9 @@ components:
               items:
                 $ref: '#/components/schemas/MpCategory'
 
-    MpRequestCategoryCreate:
-      title: Запрос создания Категории
-      allOf:
-        - $ref: '#/components/schemas/MpRequestBase'
-        - type: object
-          properties:
-            createData:
-              $ref: '#/components/schemas/MpCategoryCreate'
-
-    MpResponseCategoryCreate:
-      title: Ответ на запрос создания Категории
-      allOf:
-        - $ref: '#/components/schemas/MpResponseBase'
-        - type: object
-          properties:
-            category:
-              $ref: '#/components/schemas/MpCategory'
-
-    MpRequestCategoryRead:
-      title: Запрос получения Категории
-      allOf:
-        - $ref: '#/components/schemas/MpRequestBase'
-        - type: object
-          properties:
-            categoryId:
-              type: string
-              example: 'cat-57'
-
-    MpResponseCategoryRead:
-      title: Ответ на запрос информации о Категории
-      allOf:
-        - $ref: '#/components/schemas/MpResponseBase'
-        - type: object
-          properties:
-            category:
-              $ref: '#/components/schemas/MpCategory'
-
-
-    MpRequestCategoryUpdate:
-      title: Запрос изменения Категории
-      allOf:
-        - $ref: '#/components/schemas/MpRequestBase'
-        - type: object
-          properties:
-            updateData:
-              $ref: '#/components/schemas/MpCategoryUpdate'
-
-    MpResponseCategoryUpdate:
-      allOf:
-        - $ref: '#/components/schemas/MpResponseBase'
-        - type: object
-          properties:
-            category:
-              $ref: '#/components/schemas/MpCategory'
-
-    MpRequestCategoryDelete:
-      allOf:
-        - $ref: '#/components/schemas/MpRequestBase'
-        - type: object
-          properties:
-            categoryId:
-              type: string
-              example: 'cat-57'
-
-    MpResponseCategoryDelete:
-      title: Ответ на запрос удаления Категории
-      allOf:
-        - $ref: '#/components/schemas/MpResponseBase'
-        - type: object
-          properties:
-            category:
-              $ref: '#/components/schemas/MpCategory'
+    ########################################
+    # Category перечисления
+    ########################################
 
     EMpCategoryType:
       title: Перечисление типов категорий
@@ -349,3 +462,125 @@ components:
                 - APPLICATION
                 - BRAND
               example: 'PRODUCTION'
+
+
+    ########################################
+    # Classification модели
+    ########################################
+
+    MpClassificationCreate:
+      title: Создание Классификации
+      allOf:
+        - type: object
+          title: Создание Классификации
+          properties:
+            productId:
+              type: string
+              title: id продукта
+              example: 'prod-76'
+            categoryId:
+              type: string
+              title: id категории
+              example: 'cat-57'
+
+    MpClassificationUpdate:
+      title: Изменение Классификации
+      allOf:
+        - $ref: '#/components/schemas/MpClassificationCreate'
+        - type: object
+          properties:
+            id:
+              type: string
+              title: id Классификации
+              example: cls-57'
+
+    MpClassification:
+      title: Классификация
+      allOf:
+        - $ref: '#/components/schemas/MpClassificationUpdate'
+
+    MpClassificationListItem:
+      title: Элемент списка Классификаций
+      allOf:
+        - $ref: '#/components/schemas/MpClassificationUpdate'
+        - type: object
+          properties:
+            classificationPath:
+              type: array
+              items:
+                $ref: '#/components/schemas/MpCategory'
+
+
+    ########################################
+    # Classification Create
+    ########################################
+
+    MpRequestClassificationCreate:
+      title: Запрос создания Классификации
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            createData:
+              $ref: '#/components/schemas/MpClassificationCreate'
+
+    MpResponseClassificationCreate:
+      title: Ответ на запрос создания Классификации
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            classification:
+              $ref: '#/components/schemas/MpClassification'
+
+    ########################################
+    # Classification Delete
+    ########################################
+
+    MpRequestClassificationDelete:
+      title: Запрос удаления Классификации
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            classificationId:
+              type: string
+              example: 'cat-57'
+
+    MpResponseClassificationDelete:
+      title: Ответ на запрос удаления Классификации
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            classification:
+              $ref: '#/components/schemas/MpClassification'
+
+    ########################################
+    # Classification List
+    ########################################
+
+    MpRequestClassificationList:
+      title: Запрос списка Категорий
+      allOf:
+        - $ref: '#/components/schemas/MpRequestBase'
+        - type: object
+          properties:
+            filterData:
+                type: object
+                title: Параметры фильтра
+                properties:
+                  productId:
+                    type: string
+                    example: 'prod-76'
+
+    MpResponseClassificationList:
+      title: Ответ на запрос списка Категорий
+      allOf:
+        - $ref: '#/components/schemas/MpResponseBase'
+        - type: object
+          properties:
+            categorys:
+              type: array
+              items:
+                $ref: '#/components/schemas/MpClassificationListItem'
