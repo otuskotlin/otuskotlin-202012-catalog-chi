@@ -21,9 +21,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MpRequestCategoryList'
-        #            examples:
-        #              application/json:
-        #                $ref: '#/components/examples/RequestCategoryListExample'
         required: true
       responses:
         200:
@@ -32,9 +29,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryList'
-  #              examples:
-  #                ok:
-  #                  $ref: '#/components/examples/ResponseCategoryListExampleOk'
 
   /category/create:
     post:
@@ -48,9 +42,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MpRequestCategoryCreate'
-        #            examples:
-        #              application/json:
-        #                $ref: '#/components/examples/MpRequestCategoryCreateExample'
         required: true
       responses:
         200:
@@ -59,9 +50,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryCreate'
-  #              examples:
-  #                application/json:
-  #                  $ref: '#/components/examples/ResponseCategoryCreateExampleOk'
 
   /category/read:
     post:
@@ -75,9 +63,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MpRequestCategoryRead'
-        #            examples:
-        #              application/json:
-        #                $ref: '#/components/examples/RequestCategoryReadExample'
         required: true
       responses:
         200:
@@ -86,9 +71,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryRead'
-  #              examples:
-  #                application/json:
-  #                  $ref: '#/components/examples/ResponseCategoryReadExampleOk'
 
   /category/update:
     post:
@@ -102,9 +84,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MpRequestCategoryUpdate'
-        #            examples:
-        #              application/json:
-        #                $ref: '#/components/examples/RequestCategoryUpdateExample'
         required: true
       responses:
         200:
@@ -113,9 +92,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryUpdate'
-  #              examples:
-  #                application/json:
-  #                  $ref: '#/components/examples/ResponseCategoryUpdateExampleOk'
 
   /category/delete:
     post:
@@ -129,9 +105,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/MpRequestCategoryDelete'
-        #            examples:
-        #              application/json:
-        #                $ref: '#/components/examples/RequestCategoryDeleteExample'
         required: true
       responses:
         200:
@@ -140,9 +113,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryDelete'
-#              examples:
-#                application/json:
-#                  $ref: '#/components/examples/ResponseCategoryDeleteExampleOk'
 components:
   schemas:
     MpBaseMessage:
@@ -291,11 +261,6 @@ components:
               items:
                 $ref: '#/components/schemas/MpCategory'
 
-    #    MpCategoryListFilter:
-    #      title: Фильтр для поиска Категорий
-    #      allOf:
-    #        - $ref: '#/components/schemas/MpItemFilter'
-
     MpRequestCategoryCreate:
       title: Запрос создания Категории
       allOf:
@@ -370,23 +335,6 @@ components:
               $ref: '#/components/schemas/MpCategory'
 
     EMpCategoryType:
-      title: Перечисление типов категорий
-      allOf:
-        - type: object
-          title: Перечисление типов категорий
-          properties:
-            type:
-              type: string
-              title: Тип категории
-              enum:
-                - MARKETPLACE
-                - PRODUCTION
-                - APPLICATION
-                - BRAND
-              example: 'PRODUCTION'
-
-
-    EMpCategoryType2:
       title: Перечисление типов категорий
       allOf:
         - type: object
