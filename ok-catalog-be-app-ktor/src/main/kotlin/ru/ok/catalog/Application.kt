@@ -99,7 +99,9 @@ fun Application.module(testing: Boolean = false) {
         }
 
         route("/classification") {
-            //post("/read") { }
+            post("/create") { classificationControler.create(this) }
+            post("/delete") { classificationControler.delete(this) }
+            post("/list") { classificationControler.list(this) }
         }
     }
 }

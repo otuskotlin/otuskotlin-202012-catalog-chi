@@ -14,7 +14,7 @@ data class MpResponseClassificationCreate(
     override val status: ResponseStatusDto? = null,
     override val debug: Debug? = null,
     //ниже специфика запроса
-    val classification: MpClassificationDto
+    val classification: MpClassificationDto? = null
 ) : IMpResponse, MpMessage() {
     @Serializable
     data class Debug(
