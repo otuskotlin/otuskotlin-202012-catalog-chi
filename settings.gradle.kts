@@ -5,6 +5,7 @@ pluginManagement {
     //указание версий необходимо для единой политики применения версий плагинов во всех подпроектах
     val kotlinVersion: String by settings
     val openapiVersion: String by settings
+    val bmuschkoVersion: String by settings
 
     plugins {
         //вынесено сюда в связи с тем, что на уровне build.gradle.kts
@@ -18,6 +19,7 @@ pluginManagement {
 
 
         id("org.openapi.generator") version openapiVersion
+        id("com.bmuschko.docker-java-application") version bmuschkoVersion
     }
 }
 

@@ -10,7 +10,10 @@ import io.ktor.http.content.*
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+import kotlin.test.fail
 import io.ktor.server.testing.*
 
 class ApplicationTest {

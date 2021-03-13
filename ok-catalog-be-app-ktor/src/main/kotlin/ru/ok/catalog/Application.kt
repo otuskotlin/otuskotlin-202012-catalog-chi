@@ -10,6 +10,14 @@ import io.ktor.http.content.*
 import io.ktor.application.*
 import io.ktor.response.*
 import io.ktor.request.*
+import io.ktor.serialization.*
+import ru.ok.catalog.controllers.MpCategoryController
+import ru.ok.catalog.controllers.MpClassificationController
+import ru.ok.catalog.transport.kmp.models.category.*
+import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationCreate
+import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationDelete
+import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationList
+import ru.ok.catalog.transport.kmp.models.common.MpMessage
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -21,6 +29,9 @@ fun main(args: Array<String>): Unit =
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
+    val categoryControler = MpCategoryController()
+    val classificationControler = MpClassificationController()
+
     install(CORS) {
         method(HttpMethod.Options)
         method(HttpMethod.Put)
@@ -31,6 +42,13 @@ fun Application.module(testing: Boolean = false) {
         allowCredentials = true
         anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
         //host("xxx")
+    }
+
+    install(ContentNegotiation) {
+        json(
+            contentType = ContentType.Application.Json,
+            json = jsonConfig,
+        )
     }
 
 
@@ -70,6 +88,71 @@ fun Application.module(testing: Boolean = false) {
         // Static feature. Try to access `/static/ktor_logo.svg`
         static("/static") {
             resources("static")
+        }
+
+        route("/category") {
+            post("/read") {
+                categoryControler.read(this)
+//                try {
+//                    val query = call.receive<MpMessage>() as MpRequestCategoryRead
+//                } catch (e: Throwable) {
+//
+//                }
+            }
+            post("/create") {
+                try {
+                    val query = call.receive<MpMessage>() as MpRequestCategoryCreate
+                } catch (e: Throwable) {
+
+                }
+            }
+            post("/update") {
+                try {
+                    val query = call.receive<MpMessage>() as MpRequestCategoryUpdate
+                } catch (e: Throwable) {
+
+                }
+            }
+            post("/delete") {
+                try {
+                    val query = call.receive<MpMessage>() as MpRequestCategoryDelete
+                } catch (e: Throwable) {
+
+                }
+            }
+            post("/list") {
+                try {
+                    val query = call.receive<MpMessage>() as MpRequestCategoryList
+                } catch (e: Throwable) {
+
+                }
+            }
+        }
+
+        route("/classification") {
+            //post("/read") { }
+            post("/create") {
+                try {
+                    val query = call.receive<MpMessage>() as MpRequestClassificationCreate
+                } catch (e: Throwable) {
+
+                }
+            }
+            //post("/update") {}
+            post("/delete") {
+                try {
+                    val query = call.receive<MpMessage>() as MpRequestClassificationDelete
+                } catch (e: Throwable) {
+
+                }
+            }
+            post("/list") {
+                try {
+                    val query = call.receive<MpMessage>() as MpRequestClassificationList
+                } catch (e: Throwable) {
+
+                }
+            }
         }
     }
 }
