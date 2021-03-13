@@ -11,11 +11,6 @@ tags:
   - name: Classification
     description: Работа с Классификациями
 paths:
-
-  ########################################
-  # Точки доступа к Категориям
-  ########################################
-
   /category/list:
     post:
       tags:
@@ -36,7 +31,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryList'
-
   /category/create:
     post:
       tags:
@@ -57,7 +51,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryCreate'
-
   /category/read:
     post:
       tags:
@@ -78,7 +71,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryRead'
-
   /category/update:
     post:
       tags:
@@ -99,7 +91,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryUpdate'
-
   /category/delete:
     post:
       tags:
@@ -120,11 +111,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseCategoryDelete'
-
-  ########################################
-  # Точки доступа к классификациям
-  ########################################
-
   /сlassification/list:
     post:
       tags:
@@ -145,7 +131,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseClassificationList'
-
   /сlassification/create:
     post:
       tags:
@@ -166,7 +151,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseClassificationCreate'
-
   /сlassification/delete:
     post:
       tags:
@@ -187,12 +171,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MpResponseClassificationDelete'
-
 components:
   schemas:
-    ########################################
-    # Базовые типы сообщений
-    ########################################
     MpBaseMessage:
       title: Базовые реквизиты сообщения
       type: object
@@ -230,9 +210,6 @@ components:
             debug:
               type: object
               title: Отладочные параметры запроса
-              #каждый запрос может иметь свои параметры debug
-              #type: object - общий тип без конкретизации
-              #рекомендуется его жестко не определять
 
     MpResponseBase:
       title: Базовые реквизиты ответа
@@ -269,10 +246,6 @@ components:
               type: object
               title: Параметры отладки
 
-    ########################################
-    # Category модели
-    ########################################
-
     MpCategoryCreate:
       title: Создание категории
       allOf:
@@ -282,7 +255,7 @@ components:
             title:
               type: string
               title: Название
-              example: 'Производство металлообрабатывающего оборудования'
+              #example: 'Производство металлообрабатывающего оборудования'
             code:
               type: string
               title: Код
@@ -301,7 +274,6 @@ components:
               title: Ссылка на вышестоящую категорию
               example: 'cat-145'
 
-
     MpCategoryUpdate:
       title: Изменение категории
       allOf:
@@ -312,7 +284,6 @@ components:
               type: string
               title: id категории
               example: 'cat-57'
-
 
     MpCategory:
       title: Категория
@@ -328,10 +299,6 @@ components:
               type: boolean
               title: Признак категории нижнего уровня
               example: false
-
-    ########################################
-    # Category Create
-    ########################################
 
     MpRequestCategoryCreate:
       title: Запрос создания Категории
@@ -350,10 +317,6 @@ components:
           properties:
             category:
               $ref: '#/components/schemas/MpCategory'
-
-    ########################################
-    # Category Read
-    ########################################
 
     MpRequestCategoryRead:
       title: Запрос получения Категории
@@ -374,11 +337,6 @@ components:
             category:
               $ref: '#/components/schemas/MpCategory'
 
-
-    ########################################
-    # Category Update
-    ########################################
-
     MpRequestCategoryUpdate:
       title: Запрос изменения Категории
       allOf:
@@ -396,10 +354,6 @@ components:
           properties:
             category:
               $ref: '#/components/schemas/MpCategory'
-
-    ########################################
-    # Category Delete
-    ########################################
 
     MpRequestCategoryDelete:
       title: Запрос удаления Категории
@@ -419,10 +373,6 @@ components:
           properties:
             category:
               $ref: '#/components/schemas/MpCategory'
-
-    ########################################
-    # Category List
-    ########################################
 
     MpRequestCategoryList:
       title: Запрос списка Категорий
@@ -457,11 +407,6 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/MpCategory'
-
-
-    ########################################
-    # Classification модели
-    ########################################
 
     MpClassificationCreate:
       title: Создание Классификации
@@ -505,11 +450,6 @@ components:
               items:
                 $ref: '#/components/schemas/MpCategory'
 
-
-    ########################################
-    # Classification Create
-    ########################################
-
     MpRequestClassificationCreate:
       title: Запрос создания Классификации
       allOf:
@@ -527,10 +467,6 @@ components:
           properties:
             classification:
               $ref: '#/components/schemas/MpClassification'
-
-    ########################################
-    # Classification Delete
-    ########################################
 
     MpRequestClassificationDelete:
       title: Запрос удаления Классификации
@@ -550,10 +486,6 @@ components:
           properties:
             classification:
               $ref: '#/components/schemas/MpClassification'
-
-    ########################################
-    # Classification List
-    ########################################
 
     MpRequestClassificationList:
       title: Запрос списка Категорий
