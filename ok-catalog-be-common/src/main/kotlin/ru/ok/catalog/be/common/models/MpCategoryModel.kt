@@ -9,7 +9,7 @@ data class MpCategoryModel(
     //рассмотривал вариант сделать типизацию через upRefId на специальные companion object
     //отказался из соображений простаты и из-за того, что может потребоваться обработка всех
     //вариантов, enum дает возможность это контролировать при компиляции
-    val type: EMpCategoryType = EMpCategoryType.MARKETPLACE,
+    val type: CategoryType = CategoryType.MARKETPLACE,
     //код категории, например код ОКВЭД или кода категории бренда
     val code: String = "",
     //наименование

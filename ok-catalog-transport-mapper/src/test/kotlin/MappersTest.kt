@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Test
 import ru.ok.catalog.be.common.context.MpBeContext
-import ru.ok.catalog.be.common.models.EMpCategoryType
+import ru.ok.catalog.be.common.models.CategoryType
 import ru.ok.catalog.be.common.models.MpCategoryIdModel
 import ru.ok.catalog.be.common.models.MpCategoryModel
 import ru.ok.catalog.transport.kmp.models.category.*
@@ -24,7 +24,7 @@ class MappersTest {
 
         context.setQuery(request)
         assertEquals("Машиностроение", context.requestCategory.title)
-        assertEquals(EMpCategoryType.PRODUCTION,context.requestCategory.type)
+        assertEquals(CategoryType.PRODUCTION,context.requestCategory.type)
         assertEquals(null,context.requestCategory.isLeaf)
         assertEquals("28.41",context.requestCategory.code)
     }
@@ -33,7 +33,7 @@ class MappersTest {
     fun dtoMappersTest() {
         val category = MpCategoryModel(
             id = MpCategoryIdModel("cat-57"),
-            type = EMpCategoryType.PRODUCTION,
+            type = CategoryType.PRODUCTION,
             title = "Машиностроение",
             code = "28.41",
             upRefId = MpCategoryIdModel.NONE,
@@ -101,7 +101,7 @@ private fun MpBeContext.setQuery(request: MpRequestCategoryCreate){
             title = data.title?:"",
             code = data.code?:"",
             //TODO: где делать валидацию type и возвращать ошибку?
-            type = EMpCategoryType.valueOf(data.type?:"MARKETPLACE"),
+            type = CategoryType.valueOf(data.type?:"MARKETPLACE"),
             upRefId = MpCategoryIdModel(data.upRefId?:""),
         )
     }
@@ -122,7 +122,7 @@ private fun MpBeContext.setQuery(request: MpRequestCategoryUpdate) {
             title = data.title ?: "",
             code = data.code ?: "",
             //TODO: где делать валидацию type и возвращать ошибку?
-            type = EMpCategoryType.valueOf(data.type ?: "MARKETPLACE"),
+            type = CategoryType.valueOf(data.type ?: "MARKETPLACE"),
             upRefId = MpCategoryIdModel(data.upRefId ?: ""),
             //TODO: валидация на непустое значение
             id = MpCategoryIdModel(data.id ?: ""),

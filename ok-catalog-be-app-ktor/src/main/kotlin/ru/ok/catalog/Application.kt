@@ -91,68 +91,15 @@ fun Application.module(testing: Boolean = false) {
         }
 
         route("/category") {
-            post("/read") {
-                categoryControler.read(this)
-//                try {
-//                    val query = call.receive<MpMessage>() as MpRequestCategoryRead
-//                } catch (e: Throwable) {
-//
-//                }
-            }
-            post("/create") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestCategoryCreate
-                } catch (e: Throwable) {
-
-                }
-            }
-            post("/update") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestCategoryUpdate
-                } catch (e: Throwable) {
-
-                }
-            }
-            post("/delete") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestCategoryDelete
-                } catch (e: Throwable) {
-
-                }
-            }
-            post("/list") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestCategoryList
-                } catch (e: Throwable) {
-
-                }
-            }
+            post("/read") { categoryControler.read(this) }
+            post("/create") { categoryControler.create(this) }
+            post("/update") { categoryControler.update(this) }
+            post("/delete") { categoryControler.delete(this) }
+            post("/list") { categoryControler.list(this) }
         }
 
         route("/classification") {
             //post("/read") { }
-            post("/create") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestClassificationCreate
-                } catch (e: Throwable) {
-
-                }
-            }
-            //post("/update") {}
-            post("/delete") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestClassificationDelete
-                } catch (e: Throwable) {
-
-                }
-            }
-            post("/list") {
-                try {
-                    val query = call.receive<MpMessage>() as MpRequestClassificationList
-                } catch (e: Throwable) {
-
-                }
-            }
         }
     }
 }
