@@ -64,10 +64,10 @@ class MappersTest {
         assertFalse(s2 == "")
         s2 = s3.toString()
         assertEquals(s3,s2)
-        s2 = s1.nvl("NULL")
-        assertEquals("NULL",s2)
-        s2 = s3.nvl("NULL")
-        assertEquals("xxx",s2)
+//        s2 = s1.nvl("NULL")
+//        assertEquals("NULL",s2)
+//        s2 = s3.nvl("NULL")
+//        assertEquals("xxx",s2)
         s2 = s1?:"NULL"
         assertEquals("NULL",s2)
         s2 = s3?:"NULL"
@@ -79,9 +79,10 @@ class MappersTest {
     }
 }
 
-fun <T> T?.nvl(default: T): T {
-    return this ?: default
-}
+//fun <T> T?.nvl(default: T): T {
+//    return this ?: default
+//}
+
 fun  String.bnl(): String? {
     return if ( this == "") { null } else { this }
 }
