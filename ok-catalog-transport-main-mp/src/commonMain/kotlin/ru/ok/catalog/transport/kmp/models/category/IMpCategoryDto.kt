@@ -10,7 +10,4 @@ interface IMpCategoryDto : IMpCategoryUpdateDto {
     val isRoot: Boolean?
     /** признак посреднего уровня, ведется на уровне BE **/
     val isLeaf: Boolean?
-
-    //TODO: понять, зачем они нужны
-    val permissions: Set<EMpItemPermission>?
 }
