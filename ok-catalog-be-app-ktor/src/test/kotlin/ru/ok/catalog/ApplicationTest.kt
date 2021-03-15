@@ -16,7 +16,7 @@ import kotlin.test.assertTrue
 import kotlin.test.fail
 import io.ktor.server.testing.*
 
-class ApplicationTest {
+internal class ApplicationTest {
     @Test
     fun testRoot() {
         withTestApplication({ module(testing = true) }) {

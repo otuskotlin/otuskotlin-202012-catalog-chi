@@ -10,7 +10,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-class CategoryControllerTest {
+internal class CategoryControllerTest {
 
     @Test
     fun `Category Create Test`() {

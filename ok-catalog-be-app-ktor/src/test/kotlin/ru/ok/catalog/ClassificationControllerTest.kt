@@ -11,7 +11,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
 
-class ClassificationControllerTest {
+internal class ClassificationControllerTest {
 
     @Test
     fun `Classification Create Test`() {
