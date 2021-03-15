@@ -17,7 +17,7 @@ data class MpRequestCategoryRead(
     override val onResponseId: String? = null,
     override val timeStart: String? = null,
     override val debug: Debug? = null,
-    //ниже специфика запроса
+    /** ниже специфика запроса **/
     val categoryId: String?  = null
 ) : IMpRequest, MpMessage() {
 

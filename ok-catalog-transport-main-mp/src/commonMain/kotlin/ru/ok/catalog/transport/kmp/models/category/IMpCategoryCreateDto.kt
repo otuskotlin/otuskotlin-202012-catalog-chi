@@ -1,5 +1,10 @@
 package ru.ok.catalog.transport.kmp.models.category
 
+/**
+ *
+ * Интерфейс транспортной модели для создания категории
+ *
+ */
 interface  IMpCategoryCreateDto {
     /** тип категории **/
     val type: String?

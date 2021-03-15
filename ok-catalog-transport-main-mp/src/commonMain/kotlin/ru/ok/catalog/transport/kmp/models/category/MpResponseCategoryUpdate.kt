@@ -13,7 +13,7 @@ data class MpResponseCategoryUpdate(
     override val errors: List<ErrorDto>? = null,
     override val status: ResponseStatusDto? = null,
     override val debug: Debug? = null,
-    //ниже специфика запроса
+    /** ниже специфика запроса **/
     val category: MpCategoryDto?  = null,
 ) : IMpResponse, MpMessage() {
 
