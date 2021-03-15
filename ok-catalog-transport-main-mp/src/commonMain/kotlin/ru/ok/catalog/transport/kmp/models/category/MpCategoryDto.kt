@@ -12,6 +12,5 @@ data class MpCategoryDto(
     override val upRefId: String? = null,
     override val isRoot: Boolean? = null,
     override val isLeaf: Boolean? = null,
-    override val permissions: Set<EMpItemPermission>? = null,
     override val id: String? = null
 ) : IMpCategoryDto
