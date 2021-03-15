@@ -1,10 +1,13 @@
 package ru.ok.catalog.be.common.models
 
-//Продукт
-//за рамками задания, заведен для моделирования полной функциональности
+/**
+Продукт.
+За рамками задания. Заведен для моделирования полной функциональности.
+*/
 data class MpProductItemModel(
     override val id: MpProductItemIdModel = MpProductItemIdModel.NONE,
-    //наименование
+
+    /** Наименование продукта. */
     val title: String = "",
 ) : IMpModel {
     companion object {
