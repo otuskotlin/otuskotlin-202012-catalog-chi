@@ -1,13 +1,20 @@
 package ru.ok.catalog.be.common.models
 
-//Классификация
-//реализует отноление N - N между категорией и продуктом
+/**
+Классификация.
+Реализует отноление N - N между категорией и продуктом.
+*/
 data class MpClassificationModel(
+    /** id классификации */
     override val id: MpClassificationIdModel = MpClassificationIdModel.NONE,
-    //ссылка на продукт
+
+    /** Ссылка на продукт. */
     val productId: MpProductItemIdModel = MpProductItemIdModel.NONE,
-    //ссылка на категорию
-    //ссылаться можно только на последний уровень категорий
+
+    /**
+    Ссылка на категорию.
+    Ссылаться можно только на последний уровень категорий.
+    */
     val categoryId: MpCategoryIdModel = MpCategoryIdModel.NONE,
 ) : IMpModel {
     companion object {
