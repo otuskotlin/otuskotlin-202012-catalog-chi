@@ -3,7 +3,7 @@ package ru.ok.catalog.be.common.models
 inline class MpClassificationIdModel (
     override val id: String
 
-) : IMpIdModel {
+) : IMpIdModel<String> {
     companion object {
         val NONE = MpClassificationIdModel("")
     }

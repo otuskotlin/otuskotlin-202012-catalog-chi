@@ -1,6 +1,6 @@
 package ru.ok.catalog.be.common.models
 
 //интерфейс для id понятия
-interface IMpIdModel {
-    val id: String
+interface IMpIdModel<T> {
+    val id: T
 }
