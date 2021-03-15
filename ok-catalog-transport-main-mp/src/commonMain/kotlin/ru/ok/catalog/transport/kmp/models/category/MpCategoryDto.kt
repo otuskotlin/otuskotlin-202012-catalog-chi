@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import ru.ok.catalog.transport.kmp.models.common.EMpItemPermission
 
 @Serializable
+/** документацию см. в определении интерфейса **/
 data class MpCategoryDto(
     override val type: String? = null,
     override val code: String? = null,

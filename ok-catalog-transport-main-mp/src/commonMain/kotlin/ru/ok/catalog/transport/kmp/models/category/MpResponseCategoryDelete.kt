@@ -13,7 +13,7 @@ data class MpResponseCategoryDelete(
     override val errors: List<ErrorDto>? = null,
     override val status: EResponseStatusDto? = null,
     override val debug: Debug? = null,
-    //ниже специфика запроса
+    /** ниже специфика запроса **/
     val category: MpCategoryDto? = null,
     //TODO: зачем deleted если есть status?
     val deleted: Boolean? = null

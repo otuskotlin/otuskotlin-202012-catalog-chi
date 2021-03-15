@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MpCategoryListFilterDto (
-    //тип категории
+    /** тип категории **/
     val type: String? = null,
-    //ссылка на родителя. null для категории верхнего уровня
+    /** ссылка на родителя. null для категории верхнего уровня **/
     val parentId: String? = null
 )
