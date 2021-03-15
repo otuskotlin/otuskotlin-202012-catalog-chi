@@ -15,8 +15,6 @@ data class MpResponseCategoryDelete(
     override val debug: Debug? = null,
     /** ниже специфика запроса **/
     val category: MpCategoryDto? = null,
-    //TODO: зачем deleted если есть status?
-    val deleted: Boolean? = null
 ) : IMpResponse, MpMessage() {
 
     @Serializable
