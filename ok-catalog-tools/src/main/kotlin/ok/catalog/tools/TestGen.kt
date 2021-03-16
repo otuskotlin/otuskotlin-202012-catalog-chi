@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun main() {
-    genForClass("Category","title","CRUDL")
-    //genForClass("Classification","productId","CDL")
+    //genForClass("Category","title","CRUDL")
+    genForClass("Classification","productId","CDL")
 }
 
 fun genForClass(cls: String, commonField: String, ops:String = "CRUDL") {
@@ -60,10 +60,15 @@ fun genTest(cls: String, op: String, commonReqField: String, arg: String, simple
     }
     return if ( op != "List" ) {
         """
-        //
-        // проверка $op $cls
-        // generated $timeStamp
-        //
+    //
+    // проверка $op $cls
+    // generated $timeStamp
+    //
+        
+    @Test
+    fun `Test s12n $cls $op`() {
+        val json = prepareJson()
+
         val req$op = MpRequest$cls$op(
             $payload
         )
@@ -81,13 +86,18 @@ fun genTest(cls: String, op: String, commonReqField: String, arg: String, simple
         assertTrue{ res${op}Str.contains("Test for ${op} response")}
         val dtoRes${op} = json.decodeFromString(MpMessage.serializer(), res${op}Str)
         assertEquals(res${op}, (dtoRes${op} as? MpResponse${cls}${op}))
+    }
         """.trimMargin()
     } else {
         """
-        //
-        // проверка $op $cls
-        // generated $timeStamp
-        //
+    //
+    // проверка $op $cls
+    // generated $timeStamp
+    //
+    @Test
+    fun `Test s12n $cls $op`() {
+        val json = prepareJson()
+
         val req$op = MpRequest$cls$op(
             $payload
         )
@@ -105,6 +115,7 @@ fun genTest(cls: String, op: String, commonReqField: String, arg: String, simple
         assertTrue{ res${op}Str.contains("Test for ${op} response")}
         val dtoRes${op} = json.decodeFromString(MpMessage.serializer(), res${op}Str)
         assertEquals(res${op}, (dtoRes${op} as? MpResponse${cls}${op}))
+    }
         """.trimMargin()
     }
 }
