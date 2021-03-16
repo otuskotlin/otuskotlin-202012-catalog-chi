@@ -1,0 +1,33 @@
+POST http://localhost:8081/classification/create
+Content-Type: application/json
+
+{
+  "type": "MpRequestClassificationCreate",
+  "requestId": "req-13",
+  "createData": {
+    "productId": "prd-17",
+    "categoryId": "cat-50"
+  }
+}
+###
+POST http://localhost:8081/classification/delete
+Content-Type: application/json
+
+{
+  "type": "MpRequestClassificationDelete",
+  "requestId": "req-13",
+  "classificationId": "cls-22"
+}
+###
+POST http://localhost:8081/classification/list
+Content-Type: application/json
+
+{
+  "type": "MpRequestClassificationList",
+  "requestId": "req-13",
+  "filterData": {
+    "productId": "prd-17"
+  }
+}
+
+###
