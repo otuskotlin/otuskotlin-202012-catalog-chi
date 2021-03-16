@@ -1,66 +1,61 @@
+POST http://localhost:8081/category/create
+Content-Type: application/json
+
+{
+  "type": "MpRequestCategoryCreate",
+  "requestId": "req-13",
+  "createData": {
+    "type": "PRODUCTION",
+    "code": "06.20.1",
+    "title": "Добыча природного газа",
+    "upRefId": "cat-50"
+  }
+}
+###
+POST http://localhost:8081/category/read
+Content-Type: application/json
+
+{
+  "type": "MpRequestCategoryRead",
+  "requestId": "req-13",
+  "categoryId": "cat-57"
+}
+###
+POST http://localhost:8081/category/update
+Content-Type: application/json
+
+{
+  "type": "MpRequestCategoryUpdate",
+  "requestId": "req-13",
+  "updateData": {
+    "type": "MARKETPLACE",
+    "code": "06.20.1",
+    "title": "Добыча природного газа+",
+    "upRefId": "cat-50"
+  }
+}
+###
+POST http://localhost:8081/category/delete
+Content-Type: application/json
+
+{
+  "type": "MpRequestCategoryDelete",
+  "requestId": "req-13",
+  "categoryId": "cat-57"
+}
+
+###
 POST http://localhost:8081/category/list
 Content-Type: application/json
 
-{}
+{
+  "type": "MpRequestCategoryList",
+  "requestId": "req-13",
+  "filterData": {
+    "type": "PRODUCTION",
+    "parentId": "cat-50"
+  }
+}
 
-###
-POST http://localhost:8081/category/create
-Content-Type: application/json
-
-{"createData": {"title": "Test Category", "avatar": "icon://ok", "description": "Some Test Category"}}
-
-###
-POST http://localhost:8081/category/create
-Content-Type: application/json
-
-{"type": "MpRequestCategoryCreate", "createData": {"title": "Test Category", "avatar": "icon://ok", "description": "Some Test Category"}}
-
-###
-POST http://localhost:8081/category/read
-Content-Type: application/json
-
-{"categoryId": "d-7263"}
-
-###
-POST http://localhost:8081/category/read
-Content-Type: application/json
-
-{"type": "MpRequestCategoryRead", "categoryId": "d-7263"}
-
-###
-POST http://localhost:8081/category/update
-Content-Type: application/json
-
-{"updateData": {"id": "d-rrt", "title": "Test Category", "avatar": "icon://ok", "description": "Some Test Category"}}
-
-###
-POST http://localhost:8081/category/update
-Content-Type: application/json
-
-{"type": "MpRequestCategoryUpdate", "updateData": {"id": "d-rrt", "title": "Test Category", "avatar": "icon://ok", "description": "Some Test Category"}}
-
-###
-POST http://localhost:8081/category/delete
-Content-Type: application/json
-
-{"categoryId": "d-rrt"}
-
-###
-POST http://localhost:8081/category/delete
-Content-Type: application/json
-
-{"type": "MpRequestCategoryDelete", "categoryId": "d-rrt"}
-
-###
-POST http://localhost:8081/category/offers
-Content-Type: application/json
-
-{"categoryId": "d-rrt"}
-
-###
-POST http://localhost:8081/category/offers
-Content-Type: application/json
-
-{"type": "MpRequestCategoryOffersList", "categoryId": "d-rrt"}
 
 ###
