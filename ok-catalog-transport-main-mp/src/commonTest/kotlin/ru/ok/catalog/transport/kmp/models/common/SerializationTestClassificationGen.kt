@@ -12,11 +12,11 @@ import ru.ok.catalog.transport.kmp.models.classification.*
 internal class SerializationTestClassificationGen {
     //
     // проверка Create Classification
-    // generated 16.03.2021 10:11:42
+    // generated 16.03.2021 11:36:30
     //
 
     @Test
-    fun `Test s12n Classification Create`() {
+    fun test_s12n_Classification_Create() {
         val json = prepareJson()
 
         val reqCreate = MpRequestClassificationCreate(
@@ -41,11 +41,11 @@ internal class SerializationTestClassificationGen {
     }
     //
     // проверка Delete Classification
-    // generated 16.03.2021 10:11:42
+    // generated 16.03.2021 11:36:30
     //
 
     @Test
-    fun `Test s12n Classification Delete`() {
+    fun test_s12n_Classification_Delete() {
         val json = prepareJson()
 
         val reqDelete = MpRequestClassificationDelete(
@@ -68,10 +68,10 @@ internal class SerializationTestClassificationGen {
     }
     //
     // проверка List Classification
-    // generated 16.03.2021 10:11:42
+    // generated 16.03.2021 11:36:30
     //
     @Test
-    fun `Test s12n Classification List`() {
+    fun test_s12n_Classification_List() {
         val json = prepareJson()
 
         val reqList = MpRequestClassificationList(
