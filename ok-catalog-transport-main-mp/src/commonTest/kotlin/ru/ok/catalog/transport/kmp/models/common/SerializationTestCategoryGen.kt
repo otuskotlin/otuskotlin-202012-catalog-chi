@@ -16,11 +16,11 @@ import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassification
 internal class SerializationTestCategoryGen {
     //
     // проверка Create Category
-    // generated 16.03.2021 10:09:49
+    // generated 16.03.2021 11:37:37
     //
 
     @Test
-    fun `Test s12n Category Create`() {
+    fun test_s12n_Category_Create() {
         val json = prepareJson()
 
         val reqCreate = MpRequestCategoryCreate(
@@ -45,11 +45,11 @@ internal class SerializationTestCategoryGen {
     }
     //
     // проверка Read Category
-    // generated 16.03.2021 10:09:49
+    // generated 16.03.2021 11:37:37
     //
 
     @Test
-    fun `Test s12n Category Read`() {
+    fun test_s12n_Category_Read() {
         val json = prepareJson()
 
         val reqRead = MpRequestCategoryRead(
@@ -72,11 +72,11 @@ internal class SerializationTestCategoryGen {
     }
     //
     // проверка Update Category
-    // generated 16.03.2021 10:09:49
+    // generated 16.03.2021 11:37:37
     //
 
     @Test
-    fun `Test s12n Category Update`() {
+    fun test_s12n_Category_Update() {
         val json = prepareJson()
 
         val reqUpdate = MpRequestCategoryUpdate(
@@ -101,11 +101,11 @@ internal class SerializationTestCategoryGen {
     }
     //
     // проверка Delete Category
-    // generated 16.03.2021 10:09:49
+    // generated 16.03.2021 11:37:37
     //
 
     @Test
-    fun `Test s12n Category Delete`() {
+    fun test_s12n_Category_Delete() {
         val json = prepareJson()
 
         val reqDelete = MpRequestCategoryDelete(
@@ -128,10 +128,10 @@ internal class SerializationTestCategoryGen {
     }
     //
     // проверка List Category
-    // generated 16.03.2021 10:09:49
+    // generated 16.03.2021 11:37:37
     //
     @Test
-    fun `Test s12n Category List`() {
+    fun test_s12n_Category_List() {
         val json = prepareJson()
 
         val reqList = MpRequestCategoryList(
@@ -154,4 +154,5 @@ internal class SerializationTestCategoryGen {
         val dtoResList = json.decodeFromString(MpMessage.serializer(), resListStr)
         assertEquals(resList, (dtoResList as? MpResponseCategoryList))
     }
+
 }
