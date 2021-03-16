@@ -10,30 +10,15 @@ import kotlinx.serialization.modules.subclass
 import ru.ok.catalog.transport.kmp.models.classification.*
 
 internal class SerializationTestClassificationGen {
-    @Test
-    fun requestSerialTestClassification() {
-        val json = Json{
-            prettyPrint = true
-            //используем полиморфизм, указыаем базовый класс
-            serializersModule = SerializersModule {
-                polymorphic(MpMessage::class) {
-                    //TODO: не забываем добавлять сюда классы
-                    subclass(MpRequestClassificationCreate::class)
-                    subclass(MpRequestClassificationDelete::class)
-                    subclass(MpRequestClassificationList::class)
-                    subclass(MpResponseClassificationCreate::class)
-                    subclass(MpResponseClassificationDelete::class)
-                    subclass(MpResponseClassificationList::class)
-                }
-            }
-            //указыаем поле по которому будет дескриминатор
-            classDiscriminator = "type"
-        }
+    //
+    // проверка Create Classification
+    // generated 16.03.2021 10:11:42
+    //
 
-        //
-        // проверка Create Classification
-        // generated 12.03.2021 14:28:44
-        //
+    @Test
+    fun `Test s12n Classification Create`() {
+        val json = prepareJson()
+
         val reqCreate = MpRequestClassificationCreate(
             createData = MpClassificationCreateDto(
                 productId = "Test for Create request",
@@ -53,10 +38,16 @@ internal class SerializationTestClassificationGen {
         assertTrue{ resCreateStr.contains("Test for Create response")}
         val dtoResCreate = json.decodeFromString(MpMessage.serializer(), resCreateStr)
         assertEquals(resCreate, (dtoResCreate as? MpResponseClassificationCreate))
-        //
-        // проверка Delete Classification
-        // generated 12.03.2021 14:28:44
-        //
+    }
+    //
+    // проверка Delete Classification
+    // generated 16.03.2021 10:11:42
+    //
+
+    @Test
+    fun `Test s12n Classification Delete`() {
+        val json = prepareJson()
+
         val reqDelete = MpRequestClassificationDelete(
             classificationId = "Test for Delete request",
         )
@@ -74,10 +65,15 @@ internal class SerializationTestClassificationGen {
         assertTrue{ resDeleteStr.contains("Test for Delete response")}
         val dtoResDelete = json.decodeFromString(MpMessage.serializer(), resDeleteStr)
         assertEquals(resDelete, (dtoResDelete as? MpResponseClassificationDelete))
-        //
-        // проверка List Classification
-        // generated 12.03.2021 14:28:44
-        //
+    }
+    //
+    // проверка List Classification
+    // generated 16.03.2021 10:11:42
+    //
+    @Test
+    fun `Test s12n Classification List`() {
+        val json = prepareJson()
+
         val reqList = MpRequestClassificationList(
             filterData = MpClassificationListFilterDto(
                 productId = "Test for List request"
@@ -97,6 +93,5 @@ internal class SerializationTestClassificationGen {
         assertTrue{ resListStr.contains("Test for List response")}
         val dtoResList = json.decodeFromString(MpMessage.serializer(), resListStr)
         assertEquals(resList, (dtoResList as? MpResponseClassificationList))
-
     }
 }

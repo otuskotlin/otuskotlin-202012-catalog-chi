@@ -22,23 +22,7 @@ import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassification
 internal class SerializationTestCategory {
     @Test
     fun requestSerialTestCategory() {
-        val json = Json{
-            prettyPrint = true
-            //используем полиморфизм, указыаем базовый класс
-            serializersModule = SerializersModule {
-                polymorphic(MpMessage::class) {
-                    //TODO: не забываем добавлять сюда классы
-                    subclass(MpRequestCategoryCreate::class)
-                    subclass(MpRequestCategoryRead::class)
-                    subclass(MpRequestCategoryUpdate::class)
-                    subclass(MpRequestCategoryDelete::class)
-                    subclass(MpRequestCategoryList::class)
-                }
-            }
-            //указыаем поле по которому будет дескриминатор
-            classDiscriminator = "type"
-        }
-
+        val json = prepareJson()
 
         //
         // проверка Read
