@@ -11,10 +11,10 @@ data class MpResponseClassificationCreate(
     override val onRequestId: String? = null,
     override val endTime: String? = null,
     override val errors: List<ErrorDto>? = null,
-    override val status: EResponseStatusDto? = null,
+    override val status: ResponseStatusDto? = null,
     override val debug: Debug? = null,
     //ниже специфика запроса
-    val classification: MpClassificationDto
+    val classification: MpClassificationDto? = null
 ) : IMpResponse, MpMessage() {
     @Serializable
     data class Debug(

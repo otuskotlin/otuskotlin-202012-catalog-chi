@@ -1,7 +1,8 @@
 package ru.ok.catalog.transport.kmp.models.common
 
-enum class EResponseStatusDto {
+enum class ResponseStatusDto {
     SUCCESS,
+    FAIL,
     BAD_REQUEST,
     NOT_FOUND,
 }

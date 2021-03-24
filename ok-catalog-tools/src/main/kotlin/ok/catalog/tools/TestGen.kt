@@ -95,7 +95,7 @@ fun genTest(cls: String, op: String, commonReqField: String, arg: String, simple
     // generated $timeStamp
     //
     @Test
-    fun `Test s12n $cls $op`() {
+    fun test_s12n_${cls}_${op}() {
         val json = prepareJson()
 
         val req$op = MpRequest$cls$op(
