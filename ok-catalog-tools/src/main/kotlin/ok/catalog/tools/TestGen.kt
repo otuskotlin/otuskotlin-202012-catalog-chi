@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun main() {
-    genForClass("Category","title","CRUDL")
-    //genForClass("Classification","productId","CDL")
+    //genForClass("Category","title","CRUDL")
+    genForClass("Classification","productId","CDL")
 }
 
 fun genForClass(cls: String, commonField: String, ops:String = "CRUDL") {
@@ -66,7 +66,7 @@ fun genTest(cls: String, op: String, commonReqField: String, arg: String, simple
     //
         
     @Test
-    fun test_s12n_${cls}_${op}() {
+    fun `Test s12n $cls $op`() {
         val json = prepareJson()
 
         val req$op = MpRequest$cls$op(
