@@ -6,6 +6,8 @@ import ru.ok.catalog.be.common.models.CategoryType
 import ru.ok.catalog.transport.kmp.models.category.*
 import ru.ok.catalog.transport.kmp.models.common.ResponseStatusDto
 import ru.ok.catalog.transport.kmp.models.common.MpMessage
+import ru.ok.catalog.transport.kmp.models.common.MpWorkModeDto
+import ru.ok.catalog.transport.kmp.models.common.StubCase
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.fail
@@ -18,6 +20,10 @@ internal class CategoryControllerTest {
             handleRequest(HttpMethod.Post, "/category/create") {
                 val body = MpRequestCategoryCreate(
                     requestId = "req-13",
+                    debug = MpRequestCategoryCreate.Debug(
+                        mode = MpWorkModeDto.STUB,
+                        stubCase = StubCase.SUCCESS
+                    ),
                     createData = MpCategoryCreateDto(
                         type = CategoryType.PRODUCTION.toString(),
                         code = "06.20.1",
@@ -53,10 +59,14 @@ internal class CategoryControllerTest {
             handleRequest(HttpMethod.Post, "/category/read") {
                 val body = MpRequestCategoryRead(
                     requestId = "req-13",
+                    debug = MpRequestCategoryRead.Debug(
+                        mode = MpWorkModeDto.STUB,
+                        stubCase = StubCase.SUCCESS
+                    ),
                     categoryId = "cat-57"
                 )
                 val bodyString: String = jsonConfig.encodeToString(MpMessage.serializer(),body)
-                println(bodyString)
+                //println(bodyString)
                 setBody(bodyString)
                 addHeader("Content-Type","application/json")
             }.apply {
@@ -71,6 +81,33 @@ internal class CategoryControllerTest {
                 assertEquals(ResponseStatusDto.SUCCESS, res.status)
                 assertEquals("req-13", res.onRequestId)
                 assertEquals("cat-57", res.category?.id)
+            }
+        }
+    }
+
+    @Test
+    fun `Category Read Test Validation Fail`() {
+        withTestApplication({ module(testing = true) }) {
+            handleRequest(HttpMethod.Post, "/category/read") {
+                val body = MpRequestCategoryRead(
+                    requestId = "req-13",
+                    //categoryId = "cat-57"
+                )
+                val bodyString: String = jsonConfig.encodeToString(MpMessage.serializer(),body)
+                //println(bodyString)
+                setBody(bodyString)
+                addHeader("Content-Type","application/json")
+            }.apply {
+                assertEquals(HttpStatusCode.OK, response.status())
+                assertEquals(ContentType.Application.Json.withCharset(Charsets.UTF_8), response.contentType())
+                val jsonString = response.content ?: fail("Null response json")
+                println(jsonString)
+
+                val res = (jsonConfig.decodeFromString(MpMessage.serializer(), jsonString) as? MpResponseCategoryRead)
+                    ?: fail("Incorrect response format")
+
+                assertEquals(ResponseStatusDto.ERROR, res.status)
+                assertEquals("req-13", res.onRequestId)
             }
         }
     }

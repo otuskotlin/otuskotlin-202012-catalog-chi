@@ -18,6 +18,7 @@ data class MpResponseClassificationList(
 ) : IMpResponse, MpMessage() {
     @Serializable
     data class Debug(
-        override val mode: EMpWorkModeDto?
+        override val mode: MpWorkModeDto?,
+        override val stubCase: StubCase?
     ) : IMpDebug
 }

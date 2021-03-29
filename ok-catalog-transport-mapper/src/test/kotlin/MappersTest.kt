@@ -4,10 +4,10 @@ import ru.ok.catalog.be.common.models.CategoryType
 import ru.ok.catalog.be.common.models.MpCategoryIdModel
 import ru.ok.catalog.be.common.models.MpCategoryModel
 import ru.ok.catalog.transport.kmp.models.category.*
-import ru.ok.catalog.transport.kmp.models.common.IMpRequest
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import ru.ok.catalog.backend.mappers.*
 
 class MappersTest {
     @Test
@@ -22,7 +22,7 @@ class MappersTest {
 
         val context = MpBeContext()
 
-        context.setQuery(request)
+        context.init(request)
         assertEquals("Машиностроение", context.requestCategory.title)
         assertEquals(CategoryType.PRODUCTION,context.requestCategory.type)
         assertEquals(null,context.requestCategory.isLeaf)
@@ -82,76 +82,6 @@ class MappersTest {
 //fun <T> T?.nvl(default: T): T {
 //    return this ?: default
 //}
-
-fun  String.bnl(): String? {
-    return if ( this == "") { null } else { this }
-}
-
-private fun MpBeContext.setQuery(request: IMpRequest) =
-    when(request){
-        is MpRequestCategoryCreate -> this.setQuery(request)
-        is MpRequestCategoryRead -> this.setQuery(request)
-        is MpRequestCategoryUpdate -> this.setQuery(request)
-        is MpRequestCategoryDelete -> this.setQuery(request)
-        else -> null
-}
-
-private fun MpBeContext.setQuery(request: MpRequestCategoryCreate){
-    request.createData?.let { data ->
-        this.requestCategory = MpCategoryModel(
-            title = data.title?:"",
-            code = data.code?:"",
-            //TODO: где делать валидацию type и возвращать ошибку?
-            type = CategoryType.valueOf(data.type?:"MARKETPLACE"),
-            upRefId = MpCategoryIdModel(data.upRefId?:""),
-        )
-    }
-}
-
-private fun MpBeContext.setQuery(request: MpRequestCategoryRead) {
-    //this.requestCategoryId = request.categoryId?.let { MpCategoryIdModel(it) }?: MpCategoryIdModel.NONE
-    this.requestCategoryId = if ( request.categoryId == null ) {
-        MpCategoryIdModel.NONE
-    } else {
-        MpCategoryIdModel(request.categoryId!!)
-    }
-}
-
-private fun MpBeContext.setQuery(request: MpRequestCategoryUpdate) {
-    request.updateData?.let { data ->
-        this.requestCategory = MpCategoryModel(
-            title = data.title ?: "",
-            code = data.code ?: "",
-            //TODO: где делать валидацию type и возвращать ошибку?
-            type = CategoryType.valueOf(data.type ?: "MARKETPLACE"),
-            upRefId = MpCategoryIdModel(data.upRefId ?: ""),
-            //TODO: валидация на непустое значение
-            id = MpCategoryIdModel(data.id ?: ""),
-        )
-    }
-}
-
-private fun MpBeContext.setQuery(request: MpRequestCategoryDelete) {
-    this.requestCategoryId = if ( request.categoryId == null ) {
-        MpCategoryIdModel.NONE
-    } else {
-        MpCategoryIdModel(request.categoryId!!)
-    }
-}
-
-private fun MpCategoryModel.toDto() =
-    MpCategoryDto(
-        //someObject?.takeIf{ status }?.apply{ doThis() }
-        //someObject?.takeIf{ status }?.doThis()
-        //id = this.id.id.takeIf{it.isNotBlank()},    //для преобразования пустых строк в null
-        id = this.id.id.bnl(),
-        title = this.title,
-        code = this.code,
-        type = this.type.name,
-        upRefId = this.upRefId.id.bnl(),
-        isLeaf = this.isLeaf,
-        isRoot = this.upRefId.id == ""
-    )
 
 //так делается обработка исключений
 //try {

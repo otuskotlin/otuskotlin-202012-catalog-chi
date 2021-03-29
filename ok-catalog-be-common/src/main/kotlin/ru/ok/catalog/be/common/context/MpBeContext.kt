@@ -1,9 +1,8 @@
 package ru.ok.catalog.be.common.context
 
-import ru.ok.catalog.be.common.models.MpCategoryIdModel
-import ru.ok.catalog.be.common.models.MpCategoryModel
-import ru.ok.catalog.be.common.models.MpClassificationIdModel
-import ru.ok.catalog.be.common.models.MpClassificationModel
+import ru.ok.catalog.be.common.models.*
+import ru.ok.catalog.transport.kmp.models.category.MpCategoryListFilter
+import ru.ok.catalog.transport.kmp.models.classification.MpClassificationListFilter
 
 /** Контекст служит контейнером для внутренних моделей
  * и используется в цепочке обработки запроса.
@@ -14,11 +13,22 @@ import ru.ok.catalog.be.common.models.MpClassificationModel
 
  **/
 data class MpBeContext(
+    var status: MpBeContextStatus = MpBeContextStatus.NONE,
+    var errors: MutableList<IMpError> = mutableListOf(),
+    var stubCase: MpStubCase = MpStubCase.NONE,
+    var requestId: String = "",
+
     var requestCategoryId: MpCategoryIdModel = MpCategoryIdModel.NONE,
     var requestCategory: MpCategoryModel = MpCategoryModel.NONE,
+    var requestCategoryFilter: MpCategoryListFilter = MpCategoryListFilter.NONE,
+
     var requestClassificationId: MpClassificationIdModel = MpClassificationIdModel.NONE,
     var requestClassification: MpClassificationModel = MpClassificationModel.NONE,
+    var requestClassificationFilter: MpClassificationListFilter = MpClassificationListFilter.NONE,
+
 
     var responseCategory: MpCategoryModel = MpCategoryModel.NONE,
+    var responseCategorys: MutableList<MpCategoryModel> = mutableListOf(),
     var responseClassification: MpClassificationModel = MpClassificationModel.NONE,
+    var responseClassifications: MutableList<MpClassificationModel> = mutableListOf(),
 )

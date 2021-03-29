@@ -33,13 +33,17 @@ class ValidatorInRange<T: Comparable<T>>(val field: String, val min: T, val max:
     }
 }
 
-class ValidatorStringNotEmpty: IValidator<String> {
+class ValidatorStringNotEmpty(
+    private val field: String = "",
+    private val message: String = "Value must not be empty or null"
+): IValidator<String> {
     override fun validate(sample: String): ValidationResult {
         if ( sample.isNullOrBlank() ) {
             return ValidationResult(
                 errors = listOf(
-                    ValidationDefaultError(
-                        message = "String \"$sample\" must not be empty or null"
+                    ValidationFieldError(
+                        message = message,
+                        field = field
                     )
                 )
             )

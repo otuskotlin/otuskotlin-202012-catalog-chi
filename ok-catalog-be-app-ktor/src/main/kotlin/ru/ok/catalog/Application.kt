@@ -5,19 +5,13 @@ import io.ktor.http.*
 import io.ktor.features.*
 import io.ktor.html.*
 import kotlinx.html.*
-import io.ktor.content.*
 import io.ktor.http.content.*
 import io.ktor.application.*
 import io.ktor.response.*
-import io.ktor.request.*
 import io.ktor.serialization.*
+import ru.ok.catalog.business.logic.backend.CategoryLogic
 import ru.ok.catalog.controllers.MpCategoryController
 import ru.ok.catalog.controllers.MpClassificationController
-import ru.ok.catalog.transport.kmp.models.category.*
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationCreate
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationDelete
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationList
-import ru.ok.catalog.transport.kmp.models.common.MpMessage
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -91,17 +85,17 @@ fun Application.module(testing: Boolean = false) {
         }
 
         route("/category") {
-            post("/read") { categoryControler.read(this) }
+            post("/read")   { categoryControler.read(this) }
             post("/create") { categoryControler.create(this) }
             post("/update") { categoryControler.update(this) }
             post("/delete") { categoryControler.delete(this) }
-            post("/list") { categoryControler.list(this) }
+            post("/list")   { categoryControler.list(this) }
         }
 
         route("/classification") {
             post("/create") { classificationControler.create(this) }
             post("/delete") { classificationControler.delete(this) }
-            post("/list") { classificationControler.list(this) }
+            post("/list")   { classificationControler.list(this) }
         }
     }
 }
