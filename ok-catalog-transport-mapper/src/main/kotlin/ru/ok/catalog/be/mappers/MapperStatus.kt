@@ -1,4 +1,4 @@
-package ru.ok.catalog.backend.mappers
+package ru.ok.catalog.be.mappers
 
 import ru.ok.catalog.be.common.context.MpBeContextStatus
 import ru.ok.catalog.transport.kmp.models.common.ResponseStatusDto

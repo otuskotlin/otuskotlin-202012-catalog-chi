@@ -1,4 +1,4 @@
-package ru.ok.catalog.common.mp.validation
+package ru.ok.catalog.common.mp.validation.homework
 
 fun calcAccountKeyRU(party: String, accnbr: String): String {
     //party - код участника, accnbr - номер счета

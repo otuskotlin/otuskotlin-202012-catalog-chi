@@ -1,4 +1,4 @@
-package ru.ok.catalog.backend.mappers
+package ru.ok.catalog.be.mappers
 
 import ru.ok.catalog.be.common.context.MpBeContext
 import ru.ok.catalog.be.common.models.CategoryType

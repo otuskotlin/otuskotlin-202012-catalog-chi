@@ -8,6 +8,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 import ru.ok.catalog.backend.mappers.*
+import ru.ok.catalog.be.mappers.init
+import ru.ok.catalog.be.mappers.toDto
 
 class MappersTest {
     @Test

@@ -1,4 +1,4 @@
-package ok.catalog.tools
+package ru.ok.catalog.tools
 
 import java.text.SimpleDateFormat
 import java.util.*

@@ -1,5 +1,8 @@
 package ru.ok.catalog.common.mp.validation
 
+import ru.ok.catalog.common.mp.validation.homework.calcAccountKeyRU
+import ru.ok.catalog.common.mp.validation.homework.getPartyCode
+
 data class Account(
     val BIC:String,
     val number:String
