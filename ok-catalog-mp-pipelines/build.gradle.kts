@@ -27,7 +27,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
                 implementation(project(":ok-catalog-common-mp"))
-                implementation(project(":ok-catalog-be-common"))
+//                implementation(project(":ok-catalog-be-common"))
 //                implementation(project(":ok-catalog-mp-pipelines-validation"))
 //                implementation(project(":ok-marketplace-mp-common"))
             }

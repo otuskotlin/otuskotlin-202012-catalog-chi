@@ -22,9 +22,9 @@ kotlin {
     jvm {
         withJava()
     }
-    linuxX64 {
-
-    }
+//    linuxX64 {
+//
+//    }
 
 
 
