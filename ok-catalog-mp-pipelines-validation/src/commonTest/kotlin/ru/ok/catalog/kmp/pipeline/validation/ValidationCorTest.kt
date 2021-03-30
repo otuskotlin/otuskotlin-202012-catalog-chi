@@ -3,7 +3,8 @@ package ru.otus.otuskotlin.marketplace.kmp.pipelines.validation
 import ru.ok.catalog.common.mp.validation.validators.ValidatorStringNonEmpty
 import ru.ok.catalog.common.mp.validation.IValidationError
 import ru.ok.catalog.common.mp.validation.ValidationResult
-import ru.ok.catalog.pipelines.kmp.*
+import ru.ok.catalog.kmp.pipeline.pipeline
+import ru.ok.catalog.kmp.pipeline.*
 import runBlockingTest
 import kotlin.test.Test
 import kotlin.test.assertEquals

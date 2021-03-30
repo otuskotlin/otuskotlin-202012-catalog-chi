@@ -12,9 +12,10 @@ import ru.ok.catalog.business.logic.backend.operations.PipelineInitOperation
 import ru.ok.catalog.common.mp.validation.ValidationFieldError
 import ru.ok.catalog.common.mp.validation.ValidationResult
 import ru.ok.catalog.common.mp.validation.ValidatorStringNotEmpty
-import ru.ok.catalog.pipelines.kmp.IOperation
-import ru.ok.catalog.pipelines.kmp.operation
-import ru.ok.catalog.pipelines.kmp.pipeline
+import ru.ok.catalog.kmp.pipeline.IOperation
+import ru.ok.catalog.kmp.pipeline.operation
+import ru.ok.catalog.kmp.pipeline.pipeline
+import ru.ok.catalog.kmp.pipeline.validation.validation
 
 object CategoryReadPipeline: IOperation<MpBeContext> by pipeline ({
     execute(PipelineInitOperation)

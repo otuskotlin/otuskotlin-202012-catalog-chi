@@ -1,7 +1,8 @@
-package ru.ok.catalog.pipelines.kmp
+package ru.ok.catalog.kmp.pipeline.validation
 
 import ru.ok.catalog.common.mp.validation.IValidator
 import ru.ok.catalog.common.mp.validation.ValidationResult
+import ru.ok.catalog.kmp.pipeline.PipelineDsl
 
 @PipelineDsl
 // !!! В DSL, Builder - только для настроек

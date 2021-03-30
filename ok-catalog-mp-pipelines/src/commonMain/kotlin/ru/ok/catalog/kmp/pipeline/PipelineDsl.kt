@@ -1,4 +1,4 @@
-package ru.ok.catalog.pipelines.kmp
+package ru.ok.catalog.kmp.pipeline
 
 @DslMarker
 //ограничивает, какие методы в каком контексте доступны

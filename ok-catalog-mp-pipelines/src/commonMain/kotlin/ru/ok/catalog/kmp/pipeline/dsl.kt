@@ -1,4 +1,4 @@
-package ru.ok.catalog.pipelines.kmp
+package ru.ok.catalog.kmp.pipeline
 
 inline fun <T> pipeline(block: Pipeline.Builder<T>.() -> Unit): Pipeline<T> =
     Pipeline.Builder<T>().apply(block).build()

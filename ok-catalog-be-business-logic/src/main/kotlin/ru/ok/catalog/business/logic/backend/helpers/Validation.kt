@@ -6,11 +6,12 @@ import ru.ok.catalog.be.common.context.MpBeContextStatus
 import ru.ok.catalog.business.logic.backend.pipelines.MpError
 import ru.ok.catalog.common.mp.validation.ValidationFieldError
 import ru.ok.catalog.common.mp.validation.ValidationResult
-import ru.ok.catalog.pipelines.kmp.Pipeline
-import ru.ok.catalog.pipelines.kmp.ValidationBuilder
+import ru.ok.catalog.kmp.pipeline.Pipeline
+import ru.ok.catalog.kmp.pipeline.validation.ValidationBuilder
 
 fun Pipeline.Builder<MpBeContext>.validation(block: ValidationBuilder<MpBeContext>.() -> Unit) {
-    execute(ValidationBuilder<MpBeContext>()
+    execute(
+        ValidationBuilder<MpBeContext>()
         .apply {
             startIf { status == MpBeContextStatus.RUNNING }
             errorHandler { vr: ValidationResult ->

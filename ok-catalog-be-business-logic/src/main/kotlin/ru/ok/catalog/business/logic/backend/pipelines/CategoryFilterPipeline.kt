@@ -8,9 +8,9 @@ import ru.ok.catalog.be.common.models.MpStubCase
 import ru.ok.catalog.business.logic.backend.operations.CategoryFilterStub
 import ru.ok.catalog.business.logic.backend.operations.PipelineFinalizeOperation
 import ru.ok.catalog.business.logic.backend.operations.PipelineInitOperation
-import ru.ok.catalog.pipelines.kmp.IOperation
-import ru.ok.catalog.pipelines.kmp.operation
-import ru.ok.catalog.pipelines.kmp.pipeline
+import ru.ok.catalog.kmp.pipeline.IOperation
+import ru.ok.catalog.kmp.pipeline.operation
+import ru.ok.catalog.kmp.pipeline.pipeline
 
 object CategoryFilterPipeline: IOperation<MpBeContext> by pipeline<MpBeContext>( {
     execute(PipelineInitOperation)

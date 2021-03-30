@@ -1,4 +1,4 @@
-package ru.ok.catalog.pipelines.kmp
+package ru.ok.catalog.kmp.pipeline
 
 class Pipeline<T>
 private constructor(
@@ -16,7 +16,7 @@ private constructor(
     }
 
     @PipelineDsl
-    class Builder<T>:IOperationBuilder<T> {
+    class Builder<T>: IOperationBuilder<T> {
         private val operations = mutableListOf<IOperation<T>>()
         private var checkPrecondition: Predicate<T> = { true }
         private var handleError: ErrorHandler<T> = { throw it }
@@ -41,9 +41,9 @@ private constructor(
             handleError = block
         }
 
-        fun <C> Pipeline.Builder<C>.validation(block: ValidationBuilder<C>.() -> Unit) {
-            execute(ValidationBuilder<C>().apply(block).build())
-        }
+//        fun <C> Builder<C>.validation(block: ValidationBuilder<C>.() -> Unit) {
+//            execute(ValidationBuilder<C>().apply(block).build())
+//        }
 
         override fun build(): Pipeline<T> =
             Pipeline(operations.toList(), checkPrecondition, handleError)

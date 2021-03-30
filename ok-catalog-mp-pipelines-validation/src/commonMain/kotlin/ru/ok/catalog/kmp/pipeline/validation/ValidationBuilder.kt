@@ -1,6 +1,8 @@
-package ru.ok.catalog.pipelines.kmp
+package ru.ok.catalog.kmp.pipeline.validation
 
 import ru.ok.catalog.common.mp.validation.ValidationResult
+import ru.ok.catalog.kmp.pipeline.IOperation
+import ru.ok.catalog.kmp.pipeline.IOperationBuilder
 
 class ValidationBuilder<C>: IOperationBuilder<C> {
     private var errorHandler: C.(ValidationResult) -> Unit = {}

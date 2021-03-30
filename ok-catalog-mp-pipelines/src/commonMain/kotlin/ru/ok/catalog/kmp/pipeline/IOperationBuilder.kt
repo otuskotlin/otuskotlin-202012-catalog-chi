@@ -1,4 +1,4 @@
-package ru.ok.catalog.pipelines.kmp
+package ru.ok.catalog.kmp.pipeline
 
 interface IOperationBuilder<T> {
     fun build(): IOperation<T>

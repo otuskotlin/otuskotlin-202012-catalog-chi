@@ -1,4 +1,6 @@
-package ru.ok.catalog.pipelines.kmp
+package ru.ok.catalog.kmp.pipeline.validation
+
+import ru.ok.catalog.kmp.pipeline.IOperation
 
 class PipelineValidation<C>(
     private val validations: List<IValidationOperation<C, *>>
