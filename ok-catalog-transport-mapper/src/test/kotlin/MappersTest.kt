@@ -42,13 +42,13 @@ class MappersTest {
 
         val dto = category.toDto()
 
-        assertEquals("Машиностроение", dto.title)
-        assertEquals("PRODUCTION",dto.type)
-        assertEquals("28.41",dto.code)
-        assertEquals(null,dto.upRefId)
-        assertEquals(false, dto.isLeaf)
-        assertEquals(true, dto.isRoot)
-        assertEquals("cat-57", dto.id)
+        assertEquals("Машиностроение", dto?.title)
+        assertEquals("PRODUCTION",dto?.type)
+        assertEquals("28.41",dto?.code)
+        assertEquals(null,dto?.upRefId)
+        assertEquals(false, dto?.isLeaf)
+        assertEquals(true, dto?.isRoot)
+        assertEquals("cat-57", dto?.id)
     }
 
     @Test
