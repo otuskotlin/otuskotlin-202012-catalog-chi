@@ -14,7 +14,7 @@ import ru.ok.catalog.transport.kmp.models.common.MpMessage
 import ru.ok.catalog.transport.kmp.models.common.ResponseStatusDto
 import java.time.Instant
 
-class MpClassificationController {
+class MpClassificationApiHttpAdapter {
     private val log = LoggerFactory.getLogger(this::class.java)!!
 
     suspend fun create(pipelineContext: PipelineContext<Unit, ApplicationCall>) {

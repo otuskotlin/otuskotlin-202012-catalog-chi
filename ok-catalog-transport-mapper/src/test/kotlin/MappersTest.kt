@@ -7,7 +7,6 @@ import ru.ok.catalog.transport.kmp.models.category.*
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
-import ru.ok.catalog.backend.mappers.*
 import ru.ok.catalog.be.mappers.init
 import ru.ok.catalog.be.mappers.toDto
 
@@ -25,10 +24,10 @@ class MappersTest {
         val context = MpBeContext()
 
         context.init(request)
-        assertEquals("Машиностроение", context.requestCategory.title)
-        assertEquals(CategoryType.PRODUCTION,context.requestCategory.type)
-        assertEquals(null,context.requestCategory.isLeaf)
-        assertEquals("28.41",context.requestCategory.code)
+        assertEquals("Машиностроение", context.qryCategory.title)
+        assertEquals(CategoryType.PRODUCTION,context.qryCategory.type)
+        assertEquals(null,context.qryCategory.isLeaf)
+        assertEquals("28.41",context.qryCategory.code)
     }
 
     @Test

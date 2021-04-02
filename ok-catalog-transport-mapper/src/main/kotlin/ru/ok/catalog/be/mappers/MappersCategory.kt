@@ -1,12 +1,13 @@
 package ru.ok.catalog.be.mappers
 
 import ru.ok.catalog.be.common.context.MpBeContext
+import ru.ok.catalog.be.common.context.MpBeContextStatus
 import ru.ok.catalog.be.common.models.CategoryType
 import ru.ok.catalog.be.common.models.MpCategoryIdModel
 import ru.ok.catalog.be.common.models.MpCategoryModel
 import ru.ok.catalog.be.common.models.MpStubCase
 import ru.ok.catalog.transport.kmp.models.category.*
-import ru.ok.catalog.transport.kmp.models.common.IMpRequest
+import ru.ok.catalog.transport.kmp.models.common.ResponseStatusDto
 import ru.ok.catalog.transport.kmp.models.common.StubCase
 
 //TODO реализовать или удалить
@@ -32,60 +33,77 @@ import ru.ok.catalog.transport.kmp.models.common.StubCase
 //    }
 //}
 
-private fun MpBeContext.init(request: IMpRequest) =
-    when(request){
-        is MpRequestCategoryCreate -> this.init(request)
-        is MpRequestCategoryRead -> this.init(request)
-        is MpRequestCategoryUpdate -> this.init(request)
-        is MpRequestCategoryDelete -> this.init(request)
-        else -> null
-    }
+//fun MpBeContext.init(request: IMpRequest) =
+//    when(request){
+//        is MpRequestCategoryCreate -> this.init(request)
+//        is MpRequestCategoryRead -> this.init(request)
+//        is MpRequestCategoryUpdate -> this.init(request)
+//        is MpRequestCategoryDelete -> this.init(request)
+//        else -> null
+//    }
 
-fun MpBeContext.init(request: MpRequestCategoryCreate){
+fun MpBeContext.init(request: MpRequestCategoryCreate): MpBeContext {
     requestId = request.requestId.toString()
     stubCase = when(request.debug?.stubCase) {
         StubCase.SUCCESS -> MpStubCase.CATEGORY_CREATE_SUCCESS
-        null -> MpStubCase.NONE
+        else -> MpStubCase.INVALID
     }
     request.createData?.let {
-        requestCategory = it.toInternal()
+        qryCategory = it.toInternal()
     }
+    return this
 }
 
-fun MpBeContext.init(request: MpRequestCategoryRead) {
+fun MpBeContext.init(request: MpRequestCategoryRead): MpBeContext {
     requestId = request.requestId.toString()
     stubCase = when(request.debug?.stubCase) {
         StubCase.SUCCESS -> MpStubCase.CATEGORY_READ_SUCCESS
-        null -> MpStubCase.NONE
+        StubCase.ERROR -> MpStubCase.CATEGORY_READ_ERROR
+        StubCase.EXCEPTION -> MpStubCase.CATEGORY_READ_EXCEPTION
+        else -> MpStubCase.INVALID
     }
     //this.requestCategoryId = request.categoryId?.let { MpCategoryIdModel(it) }?: MpCategoryIdModel.NONE
-    this.requestCategoryId = if ( request.categoryId == null ) {
+    this.qryCategoryId = if ( request.categoryId == null ) {
         MpCategoryIdModel.NONE
     } else {
         MpCategoryIdModel(request.categoryId!!)
     }
+    return this
 }
 
-private fun MpBeContext.init(request: MpRequestCategoryUpdate) {
+fun MpBeContext.init(request: MpRequestCategoryUpdate): MpBeContext {
     request.updateData?.let { data ->
-        this.requestCategory = MpCategoryModel(
+        this.qryCategory = MpCategoryModel(
             title = data.title ?: "",
             code = data.code ?: "",
             //TODO: где делать валидацию type и возвращать ошибку?
-            type = CategoryType.valueOf(data.type ?: "MARKETPLACE"),
+            type = CategoryType.valueOf(data.type ?: "NONE"),
             upRefId = MpCategoryIdModel(data.upRefId ?: ""),
             //TODO: валидация на непустое значение
             id = MpCategoryIdModel(data.id ?: ""),
         )
     }
+    return this
 }
 
-private fun MpBeContext.init(request: MpRequestCategoryDelete) {
-    this.requestCategoryId = if ( request.categoryId == null ) {
+fun MpBeContext.init(request: MpRequestCategoryDelete): MpBeContext {
+    this.qryCategoryId = if ( request.categoryId == null ) {
         MpCategoryIdModel.NONE
     } else {
         MpCategoryIdModel(request.categoryId!!)
     }
+    return this
+}
+
+fun MpBeContext.init(request: MpRequestCategoryList): MpBeContext {
+    this.qryCategoryFilter = if ( request.filterData == null ) {
+        MpCategoryListFilter.NONE
+    } else request.filterData!!.toInternal()
+    stubCase = when(request.debug?.stubCase) {
+        StubCase.SUCCESS -> MpStubCase.CATEGORY_LIST_SUCCESS
+        else -> MpStubCase.INVALID
+    }
+    return this
 }
 
 
@@ -103,6 +121,12 @@ fun MpCategoryCreateDto.toInternal() = MpCategoryModel(
     //TODO
     //type =
 )
+
+fun MpCategoryListFilterDto.toInternal() = MpCategoryListFilter(
+    type = CategoryType.valueOf(type ?: "NONE"),
+    parentId = parentId ?: "",
+)
+
 fun MpCategoryModel.toDto() =
     if ( this == MpCategoryModel.NONE ) {
         null
@@ -121,6 +145,14 @@ fun MpCategoryModel.toDto() =
         )
     }
 
+fun MpBeContextStatus.toDto() =
+    when(this) {
+        MpBeContextStatus.SUCCESS -> ResponseStatusDto.SUCCESS
+        MpBeContextStatus.ERROR -> ResponseStatusDto.ERROR
+        else -> ResponseStatusDto.FAIL
+    }
+
 fun  String.bnl(): String? {
     return if ( this == "") { null } else { this }
 }
+

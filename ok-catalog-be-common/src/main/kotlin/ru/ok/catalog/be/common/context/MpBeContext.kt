@@ -18,17 +18,17 @@ data class MpBeContext(
     var stubCase: MpStubCase = MpStubCase.NONE,
     var requestId: String = "",
 
-    var requestCategoryId: MpCategoryIdModel = MpCategoryIdModel.NONE,
-    var requestCategory: MpCategoryModel = MpCategoryModel.NONE,
-    var requestCategoryFilter: MpCategoryListFilter = MpCategoryListFilter.NONE,
+    var qryCategoryId: MpCategoryIdModel = MpCategoryIdModel.NONE,
+    var qryCategory: MpCategoryModel = MpCategoryModel.NONE,
+    var qryCategoryFilter: MpCategoryListFilter = MpCategoryListFilter.NONE,
 
-    var requestClassificationId: MpClassificationIdModel = MpClassificationIdModel.NONE,
-    var requestClassification: MpClassificationModel = MpClassificationModel.NONE,
-    var requestClassificationFilter: MpClassificationListFilter = MpClassificationListFilter.NONE,
+    var qryClassificationId: MpClassificationIdModel = MpClassificationIdModel.NONE,
+    var qryClassification: MpClassificationModel = MpClassificationModel.NONE,
+    var qryClassificationFilter: MpClassificationListFilter = MpClassificationListFilter.NONE,
 
 
-    var responseCategory: MpCategoryModel = MpCategoryModel.NONE,
-    var responseCategorys: MutableList<MpCategoryModel> = mutableListOf(),
-    var responseClassification: MpClassificationModel = MpClassificationModel.NONE,
-    var responseClassifications: MutableList<MpClassificationModel> = mutableListOf(),
+    var resCategory: MpCategoryModel = MpCategoryModel.NONE,
+    var resCategories: MutableList<MpCategoryModel> = mutableListOf(),
+    var resClassification: MpClassificationModel = MpClassificationModel.NONE,
+    var resClassifications: MutableList<MpClassificationModel> = mutableListOf(),
 )

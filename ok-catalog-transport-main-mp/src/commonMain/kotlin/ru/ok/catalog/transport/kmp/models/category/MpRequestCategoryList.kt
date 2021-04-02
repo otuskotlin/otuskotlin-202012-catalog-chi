@@ -10,7 +10,7 @@ data class MpRequestCategoryList(
     override val requestId: String? = null,
     override val onResponseId: String? = null,
     override val timeStart: String? = null,
-    override val debug: Debug? = null,
+    override val debug: MpRequestCategoryList.Debug? = null,
     /** ниже специфика запроса **/
     val filterData: MpCategoryListFilterDto? = null
 ) : IMpRequest, MpMessage() {

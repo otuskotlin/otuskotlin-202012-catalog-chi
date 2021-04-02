@@ -6,7 +6,6 @@ import ru.ok.catalog.be.common.context.MpBeContext
 import ru.ok.catalog.be.common.models.MpCategoryIdModel
 import ru.ok.catalog.business.logic.backend.pipelines.CategoryReadPipeline
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 
 internal class CategoryReadValidation {
@@ -14,7 +13,7 @@ internal class CategoryReadValidation {
     @Test
     fun `fail on catigoryId empty`() {
         val ctx = MpBeContext(
-            requestCategoryId = MpCategoryIdModel.NONE
+            qryCategoryId = MpCategoryIdModel.NONE
         )
         runBlocking {
             CategoryReadPipeline.execute(ctx)

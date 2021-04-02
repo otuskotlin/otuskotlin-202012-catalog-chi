@@ -18,7 +18,7 @@ class ValidationOperationBuilder<C, T>(
     fun on(block: C.() -> T) {
         onBlock = block
     }
-    fun build(): IValidationOperation<C, T> {
+    fun build(): IValidationOperation<C,T> {
         return DefaultValidationOperation(
             validator = validator,
             onBlock = onBlock,

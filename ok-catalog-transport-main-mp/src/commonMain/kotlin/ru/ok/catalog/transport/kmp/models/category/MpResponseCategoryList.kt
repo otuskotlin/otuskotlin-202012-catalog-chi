@@ -14,7 +14,7 @@ data class MpResponseCategoryList(
     override val status: ResponseStatusDto? = null,
     override val debug: Debug? = null,
     /** ниже специфика запроса **/
-    val categories: List<MpCategoryDto>?  = null,
+    val categories: List<MpCategoryDto?>? = null,
 ) : IMpResponse, MpMessage() {
 
     @Serializable

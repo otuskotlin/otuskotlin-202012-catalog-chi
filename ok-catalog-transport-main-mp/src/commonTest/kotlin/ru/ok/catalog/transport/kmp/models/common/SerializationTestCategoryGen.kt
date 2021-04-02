@@ -1,17 +1,9 @@
 package ru.ok.catalog.transport.kmp.models.common
 
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
-import kotlinx.serialization.modules.polymorphic
-import kotlinx.serialization.modules.subclass
 import ru.ok.catalog.transport.kmp.models.category.*
-import ru.ok.catalog.transport.kmp.models.classification.MpClassificationCreateDto
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationCreate
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationDelete
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationList
 
 internal class SerializationTestCategoryGen {
     //

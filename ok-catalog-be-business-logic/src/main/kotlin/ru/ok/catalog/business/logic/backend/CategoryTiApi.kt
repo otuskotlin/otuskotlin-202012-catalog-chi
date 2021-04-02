@@ -1,13 +1,15 @@
 package ru.ok.catalog.business.logic.backend
 
 import ru.ok.catalog.be.common.context.MpBeContext
-import ru.ok.catalog.business.logic.backend.pipelines.CategoryFilterPipeline
+import ru.ok.catalog.business.logic.backend.pipelines.CategoryListPipeline
 import ru.ok.catalog.business.logic.backend.pipelines.CategoryReadPipeline
 
-//TODO переименовать, сейчас название не соотвествует сути
-class CategoryLogic {
-    suspend fun filter(context: MpBeContext) {
-        CategoryFilterPipeline.execute(context)
+/**
+ * Transport Independent Category API
+ **/
+class CategoryTiApi {
+    suspend fun list(context: MpBeContext) {
+        CategoryListPipeline.execute(context)
     }
     suspend fun create(context: MpBeContext) {}
     suspend fun read(context: MpBeContext) {

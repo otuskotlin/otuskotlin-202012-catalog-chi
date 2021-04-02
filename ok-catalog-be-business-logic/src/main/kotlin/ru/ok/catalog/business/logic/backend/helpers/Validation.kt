@@ -10,21 +10,24 @@ import ru.ok.catalog.kmp.pipeline.Pipeline
 import ru.ok.catalog.kmp.pipeline.validation.ValidationBuilder
 
 fun Pipeline.Builder<MpBeContext>.validation(block: ValidationBuilder<MpBeContext>.() -> Unit) {
-    execute(
-        ValidationBuilder<MpBeContext>()
+    execute(ValidationBuilder<MpBeContext>()
         .apply {
             startIf { status == MpBeContextStatus.RUNNING }
             errorHandler { vr: ValidationResult ->
+//                throw RuntimeException("Here33")
+
                 if (vr.isSuccess) return@errorHandler
                 //TODO посмотри здесь на счет уровня
-                val errs = vr.errors.map { MpError(
-                    message = it.message,
-                    field = when(it) {
-                        is ValidationFieldError -> it.field
-                        else -> ""
-                    },
-                    group = IMpError.Group.VALIDATION
-                ) }
+                val errs = vr.errors.map {
+                    MpError(
+                        message = it.message,
+                        level = IMpError.Level.ERROR,
+                        field = when(it) {
+                            is ValidationFieldError -> it.field
+                            else -> ""
+                        },
+                        group = IMpError.Group.VALIDATION
+                    ) }
                 errors.addAll(errs)
                 status = MpBeContextStatus.FAILING
             }
