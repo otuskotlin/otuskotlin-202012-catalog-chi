@@ -10,10 +10,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
-internal class CategoryControllerListTest {
+internal class CategoryApiHttpListTest {
 
     @Test
-    fun `API HTTP Category List OK`() {
+    fun `ok`() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Post, "/category/list") {    //TBD
                 val body = MpRequestCategoryList(     //TBD
@@ -55,7 +55,7 @@ internal class CategoryControllerListTest {
     }
 
     @Test
-    fun `API HTTP Category List ERR validation type`() {
+    fun `err validation type`() {
         withTestApplication({ module(testing = true) }) {
             handleRequest(HttpMethod.Post, "/category/list") {    //TBD
                 val body = MpRequestCategoryList(     //TBD
