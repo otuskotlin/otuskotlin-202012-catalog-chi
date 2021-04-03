@@ -23,7 +23,7 @@ data class MpResponseCategoryRead(
     @Serializable
     data class Debug(
         override val mode: MpWorkModeDto?,
-        override val stubCase: StubCase?
+        override val stubCase: String?
     ) : IMpDebug
 }
 //MpMessage - workaround для обхода неких проблем с тем, что JS

@@ -3,7 +3,7 @@ package ru.ok.catalog.business.logic.backend.helpers
 import ru.ok.catalog.be.common.context.IMpError
 import ru.ok.catalog.be.common.context.MpBeContext
 import ru.ok.catalog.be.common.context.MpBeContextStatus
-import ru.ok.catalog.business.logic.backend.pipelines.MpError
+import ru.ok.catalog.be.common.models.MpError
 import ru.ok.catalog.common.mp.validation.ValidationFieldError
 import ru.ok.catalog.common.mp.validation.ValidationResult
 import ru.ok.catalog.kmp.pipeline.Pipeline

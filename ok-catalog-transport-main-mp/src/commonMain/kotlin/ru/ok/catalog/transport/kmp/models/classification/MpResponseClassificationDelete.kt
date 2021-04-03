@@ -20,7 +20,7 @@ data class MpResponseClassificationDelete(
     @Serializable
     data class Debug(
         override val mode: MpWorkModeDto?,
-        override val stubCase: StubCase?
+        override val stubCase: String?
     ) : IMpDebug
 }
 

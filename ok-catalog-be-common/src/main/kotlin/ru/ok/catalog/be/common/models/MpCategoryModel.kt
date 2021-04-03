@@ -11,7 +11,7 @@ data class MpCategoryModel(
     Тип категории.
     Заполняется на всех уровнях.
      */
-    val type: CategoryType = CategoryType.MARKETPLACE,
+    val type: CategoryType = CategoryType.INVALID,
     //    рассмотривал вариант сделать типизацию через upRefId на специальные companion object
     //    отказался из соображений простоты и из-за того, что может потребоваться обработка всех
     //    вариантов, enum дает возможность это контролировать при компиляции

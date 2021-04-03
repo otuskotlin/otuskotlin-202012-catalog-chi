@@ -6,7 +6,7 @@ import ru.ok.catalog.be.common.context.MpBeContextStatus
 import ru.ok.catalog.be.common.models.MpCategoryIdModel
 import ru.ok.catalog.be.common.models.MpCategoryModel
 import ru.ok.catalog.be.common.models.MpStubCase
-import ru.ok.catalog.business.logic.backend.pipelines.MpError
+import ru.ok.catalog.be.common.models.MpError
 import ru.ok.catalog.kmp.pipeline.IOperation
 import ru.ok.catalog.kmp.pipeline.operation
 import ru.ok.catalog.kmp.pipeline.pipeline
