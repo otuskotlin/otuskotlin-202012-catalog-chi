@@ -26,8 +26,13 @@ fun Pipeline.Builder<MpBeContext>.validation(block: ValidationBuilder<MpBeContex
                             is ValidationFieldError -> it.field
                             else -> ""
                         },
-                        group = IMpError.Group.VALIDATION
-                    ) }
+                        group = IMpError.Group.VALIDATION,
+                        code = when(it) {
+                            is ValidationFieldError -> it.code
+                            else -> ""
+                        }
+                    )
+                }
                 errors.addAll(errs)
                 status = MpBeContextStatus.FAILING
             }

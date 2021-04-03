@@ -6,6 +6,7 @@ import ru.ok.catalog.common.mp.validation.ValidationResult
 
 class ValidatorIntInRange<T : Comparable<T>>(
     private val field: String,
+    private val code: String,
     private val min: T,
     private val max: T
 ): IValidator<T> {
@@ -16,7 +17,8 @@ class ValidatorIntInRange<T : Comparable<T>>(
             errors = listOf(
                 ValidationFieldError(
                     message = "Value $sample for field $field exceeds range [$min, $max]",
-                    field = field
+                    field = field,
+                    code = code
                 )
             )
         )

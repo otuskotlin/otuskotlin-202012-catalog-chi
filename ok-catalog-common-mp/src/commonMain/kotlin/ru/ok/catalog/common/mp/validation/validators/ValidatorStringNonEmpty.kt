@@ -6,7 +6,8 @@ import ru.ok.catalog.common.mp.validation.ValidationResult
 
 class ValidatorStringNonEmpty(
     private val field: String = "",
-    private val message: String = "String must not be empty"
+    private val message: String = "",
+    private val code: String = ""
 ): IValidator<String?> {
 
     override fun validate(sample: String?): ValidationResult {
@@ -15,7 +16,11 @@ class ValidatorStringNonEmpty(
                 errors = listOf(
                     ValidationFieldError(
                         field = field,
-                        message = message,
+                        message = if ( message == "" )
+                                      "Значение $field не должно быть пустым"
+                                  else
+                                      message,
+                        code = code
                     )
                 )
             )
