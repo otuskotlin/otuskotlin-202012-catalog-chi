@@ -36,7 +36,7 @@ object CategoryReadStub: IOperation<MpBeContext> by pipeline ({
         execute {
             errors = mutableListOf(
                 MpError(
-                    code = "MP-001",
+                    code = "MP-E-0008",
                     message = "Уou asked for error, you got it",
                     level = IMpError.Level.ERROR,
                     field = "someField",

@@ -13,6 +13,7 @@ import ru.ok.catalog.transport.kmp.models.common.ErrorDto
 import ru.ok.catalog.transport.kmp.models.common.MpMessage
 import java.time.Instant
 import ru.ok.catalog.be.common.context.MpBeContext
+import ru.ok.catalog.be.common.context.MpBeContextStatus
 import ru.ok.catalog.be.mappers.init
 import ru.ok.catalog.be.mappers.toDto
 
@@ -31,7 +32,10 @@ class MpCategoryApiHttpAdapter (
             //преобразовать в контекст
             val ctx = MpBeContext().init(req)
             //вызвать pipeline
-            tiApi.create(ctx)
+            if ( ctx.errors.size == 0 )
+                tiApi.create(ctx)
+            else
+                ctx.status = MpBeContextStatus.ERROR
             //создать ответ с преобразованием данных в DTO
             val res: MpMessage = MpResponseCategoryCreate(  //TBD
                 responseId = FUID.id(),
@@ -68,8 +72,11 @@ class MpCategoryApiHttpAdapter (
             requestId = req.requestId
             //преобразовать в контекст
             val ctx = MpBeContext().init(req)
+            if ( ctx.errors.size == 0 )
+                tiApi.read(ctx)
+            else
+                ctx.status = MpBeContextStatus.ERROR
             //вызвать обработчик
-            tiApi.read(ctx)
             //создать ответ, представить данные в DTO
             val res: MpMessage = MpResponseCategoryRead(    //TBD
                 responseId = FUID.id(),
@@ -107,7 +114,10 @@ class MpCategoryApiHttpAdapter (
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryUpdate  //TBD
             requestId = req.requestId
             val ctx = MpBeContext().init(req)
-            tiApi.update(ctx)
+            if ( ctx.errors.size == 0 )
+                tiApi.update(ctx)
+            else
+                ctx.status = MpBeContextStatus.ERROR
             val res: MpMessage = MpResponseCategoryUpdate(  //TBD
                 responseId = FUID.id(),
                 onRequestId = requestId,
@@ -144,7 +154,10 @@ class MpCategoryApiHttpAdapter (
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryDelete    //TBD
             requestId = req.requestId
             val ctx = MpBeContext().init(req)
-            tiApi.delete(ctx)
+            if ( ctx.errors.size == 0 )
+                tiApi.delete(ctx)
+            else
+                ctx.status = MpBeContextStatus.ERROR
             val res: MpMessage = MpResponseCategoryDelete(    //TBD
                 responseId = FUID.id(),
                 onRequestId = req.requestId,
@@ -181,7 +194,10 @@ class MpCategoryApiHttpAdapter (
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryList  //TBD
             requestId = req.requestId
             val ctx = MpBeContext().init(req)
-            tiApi.list(ctx)
+            if ( ctx.errors.size == 0 )
+                tiApi.list(ctx)
+            else
+                ctx.status = MpBeContextStatus.ERROR
             val res: MpMessage = MpResponseCategoryList(  //TBD
                 responseId = FUID.id(),
                 onRequestId = requestId,
@@ -192,7 +208,7 @@ class MpCategoryApiHttpAdapter (
                 }.ifEmpty { null },
                 categories = ctx.resCategories.map {
                     it.toDto()
-                }
+                }.ifEmpty { null }
             )
             pipelineContext.call.respond(res)
         } catch (e:Throwable) {
@@ -213,5 +229,3 @@ class MpCategoryApiHttpAdapter (
         }
     }
 }
-
-

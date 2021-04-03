@@ -40,10 +40,15 @@ import ru.ok.catalog.transport.kmp.models.common.StubCase
 //        else -> null
 //    }
 
+// В добротно сформированном сообщении об ошибке указываются
+// данные, которые привели к ощибке. Первичная валидация
+// делается здесь т.к. здесь эти данные "в руках".
+
 fun MpBeContext.init(request: MpRequestCategoryCreate): MpBeContext {
     requestId = request.requestId.toString()
     stubCase = when(request.debug?.stubCase) {
         "SUCCESS" -> MpStubCase.CATEGORY_CREATE_SUCCESS
+        null -> MpStubCase.NONE
         else -> MpStubCase.INVALID
     }
     request.createData?.let {
@@ -52,15 +57,27 @@ fun MpBeContext.init(request: MpRequestCategoryCreate): MpBeContext {
     return this
 }
 
+/***********************************************************
+ *  Read - DONE
+ ***********************************************************/
 fun MpBeContext.init(request: MpRequestCategoryRead): MpBeContext {
-    requestId = request.requestId.toString()
+    requestId = request.requestId ?: ""
+    if ( requestId == "") {
+        errors.add( MpError( code = "MP-E-0001", message = "Не задан requestId", field = "requestId" ))
+    }
     stubCase = when(request.debug?.stubCase) {
         "SUCCESS" -> MpStubCase.CATEGORY_READ_SUCCESS
         "ERROR" -> MpStubCase.CATEGORY_READ_ERROR
         "EXCEPTION" -> MpStubCase.CATEGORY_READ_EXCEPTION
+        null -> MpStubCase.NONE
         else -> MpStubCase.INVALID
     }
-    //this.requestCategoryId = request.categoryId?.let { MpCategoryIdModel(it) }?: MpCategoryIdModel.NONE
+
+    if ( stubCase == MpStubCase.INVALID) {
+        errors.add( MpError( code = "MP-E-0002", message = "Недопустимое значение <${request.debug?.stubCase}>", field = "stubCase", group = IMpError.Group.VALIDATION ))
+    }
+
+    //поля нижет валидируются в транспонтно-независимой библиотеке
     this.qryCategoryId = if ( request.categoryId == null ) {
         MpCategoryIdModel.NONE
     } else {
@@ -93,25 +110,29 @@ fun MpBeContext.init(request: MpRequestCategoryDelete): MpBeContext {
     return this
 }
 
+/***********************************************************
+ *  List - DONE
+ ***********************************************************/
 fun MpBeContext.init(request: MpRequestCategoryList): MpBeContext {
     requestId = request.requestId ?: ""
     if ( requestId == "") {
-        errors.add( MpError( code = "MP-E-", message = "Не задан requestId", field = "requestId" ))
+        errors.add( MpError( code = "MP-E-0003", message = "Не задан requestId", field = "requestId" ))
     }
 
     if ( request.filterData == null ) {
-        errors.add( MpError( code = "MP-E-", message = "Не задан фильтр", field = "filterData" ))
+        errors.add( MpError( code = "MP-E-0004", message = "Не задан фильтр", field = "filterData" ))
     } else {
         qryCategoryFilter = request.filterData!!.toInternal(this)
     }
 
     stubCase = when(request.debug?.stubCase) {
         "SUCCESS" -> MpStubCase.CATEGORY_LIST_SUCCESS
+        null -> MpStubCase.NONE
         else -> MpStubCase.INVALID
     }
 
     if ( stubCase == MpStubCase.INVALID) {
-        errors.add( MpError( code = "MP-E-", message = "Недопустимое значение <${request.debug?.stubCase.toString()}>", field = "stubCase" ))
+        errors.add( MpError( code = "MP-E-0005", message = "Недопустимое значение <${request.debug?.stubCase}>", field = "stubCase" ))
     }
     return this
 }
@@ -137,7 +158,7 @@ fun MpCategoryCreateDto.toInternal() = MpCategoryModel(
 fun MpCategoryListFilterDto.toInternal(ctx: MpBeContext): MpCategoryListFilter {
     val intType = type.asEnumOrDefault(CategoryType.INVALID)
     if ( intType == CategoryType.INVALID) {
-        ctx.errors.add( MpError( code = "MP-E-", message = "Недопустимое значение <$type>", field = "type" ))
+        ctx.errors.add( MpError( code = "MP-E-0006", message = "Недопустимое значение <$type>", field = "type" ))
     }
     return MpCategoryListFilter(
         type = intType,
