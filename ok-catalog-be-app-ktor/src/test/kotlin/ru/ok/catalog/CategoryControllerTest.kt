@@ -20,7 +20,7 @@ internal class CategoryControllerTest {
                     requestId = "req-13",
                     debug = MpRequestCategoryCreate.Debug(
                         mode = MpWorkModeDto.STUB,
-                        stubCase = StubCase.SUCCESS
+                        stubCase = "SUCCESS"
                     ),
                     createData = MpCategoryCreateDto(
                         type = CategoryType.PRODUCTION.toString(),
@@ -59,7 +59,7 @@ internal class CategoryControllerTest {
                     requestId = "req-13",
                     debug = MpRequestCategoryRead.Debug(
                         mode = MpWorkModeDto.STUB,
-                        stubCase = StubCase.SUCCESS
+                        stubCase = "SUCCESS"
                     ),
                     categoryId = "cat-57"
                 )
@@ -118,7 +118,7 @@ internal class CategoryControllerTest {
                     requestId = "req-13",
                     debug = MpRequestCategoryRead.Debug(
                         mode = MpWorkModeDto.STUB,
-                        stubCase = StubCase.ERROR
+                        stubCase = "ERROR"
                     ),
                     categoryId = "cat-57"
                 )
@@ -152,7 +152,7 @@ internal class CategoryControllerTest {
                     requestId = "req-13",
                     debug = MpRequestCategoryRead.Debug(
                         mode = MpWorkModeDto.STUB,
-                        stubCase = StubCase.EXCEPTION
+                        stubCase = "EXCEPTION"
                     ),
                     categoryId = "cat-57"
                 )
@@ -251,10 +251,10 @@ internal class CategoryControllerTest {
                     requestId = "req-13",
                     debug = MpRequestCategoryList.Debug(
                         mode = MpWorkModeDto.STUB,
-                        stubCase = StubCase.SUCCESS
+                        stubCase = "SUCCESS"
                     ),
                     filterData = MpCategoryListFilterDto(
-                        type = CategoryType.PRODUCTION.toString(),
+                        type = "PRODUCTION",
                         parentId = "cat-50"
                     )
                 )
