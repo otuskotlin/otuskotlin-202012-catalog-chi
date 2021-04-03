@@ -1,4 +1,4 @@
-package ru.otus.otuskotlin.marketplace.kmp.pipelines.validation
+package ru.ok.catalog.kmp.pipelines.validation
 
 import ru.ok.catalog.common.mp.validation.validators.ValidatorStringNonEmpty
 import ru.ok.catalog.common.mp.validation.IValidationError
