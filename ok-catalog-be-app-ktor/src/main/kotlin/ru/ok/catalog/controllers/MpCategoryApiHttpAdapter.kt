@@ -42,6 +42,9 @@ class MpCategoryApiHttpAdapter (
                 onRequestId = requestId,
                 endTime = Instant.now().toString(),
                 status = ctx.status.toDto(),
+                errors = ctx.errors.map {
+                    it.toDto()
+                }.ifEmpty { null },
                 category = ctx.resCategory.toDto()
             )
             //отправить ответ
@@ -56,7 +59,8 @@ class MpCategoryApiHttpAdapter (
                 errors = listOf(
                     ErrorDto(
                         message = e.message,
-                        level = ErrorDto.ErrorLevelDto.ERROR
+                        level = ErrorDto.ErrorLevelDto.ERROR,
+                        code = "MP-E-0014"
                     )
                 )
             )
@@ -100,7 +104,8 @@ class MpCategoryApiHttpAdapter (
                 errors = listOf(
                     ErrorDto(
                         message = e.message,
-                        level = ErrorDto.ErrorLevelDto.ERROR
+                        level = ErrorDto.ErrorLevelDto.ERROR,
+                        code = "MP-E-0015"
                     )
                 )
             )
@@ -140,7 +145,8 @@ class MpCategoryApiHttpAdapter (
                 errors = listOf(
                     ErrorDto(
                         message = e.message,
-                        level = ErrorDto.ErrorLevelDto.ERROR
+                        level = ErrorDto.ErrorLevelDto.ERROR,
+                        code = "MP-E-0016"
                     )
                 )
             )
@@ -180,7 +186,8 @@ class MpCategoryApiHttpAdapter (
                 errors = listOf(
                     ErrorDto(
                         message = e.message,
-                        level = ErrorDto.ErrorLevelDto.ERROR
+                        level = ErrorDto.ErrorLevelDto.ERROR,
+                        code = "MP-E-0017"
                     )
                 )
             )
@@ -221,7 +228,8 @@ class MpCategoryApiHttpAdapter (
                 errors = listOf(
                     ErrorDto(
                         message = e.message,
-                        level = ErrorDto.ErrorLevelDto.ERROR
+                        level = ErrorDto.ErrorLevelDto.ERROR,
+                        code = "MP-E-0018"
                     )
                 )
             )

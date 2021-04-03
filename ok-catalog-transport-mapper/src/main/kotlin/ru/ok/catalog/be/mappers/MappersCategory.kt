@@ -44,18 +44,43 @@ import ru.ok.catalog.transport.kmp.models.common.StubCase
 // данные, которые привели к ощибке. Первичная валидация
 // делается здесь т.к. здесь эти данные "в руках".
 
+/***********************************************************
+ *  Create - DONE
+ ***********************************************************/
 fun MpBeContext.init(request: MpRequestCategoryCreate): MpBeContext {
     requestId = request.requestId.toString()
+
     stubCase = when(request.debug?.stubCase) {
         "SUCCESS" -> MpStubCase.CATEGORY_CREATE_SUCCESS
+        "EXCEPTION" -> MpStubCase.CATEGORY_CREATE_EXCEPTION
+        "ERROR" -> MpStubCase.CATEGORY_CREATE_ERROR
         null -> MpStubCase.NONE
         else -> MpStubCase.INVALID
     }
+    if ( stubCase == MpStubCase.INVALID) {
+        errors.add( MpError( code = "MP-E-0019", message = "Недопустимое значение <${request.debug?.stubCase}>", field = "stubCase", group = IMpError.Group.VALIDATION ))
+    }
+
     request.createData?.let {
-        qryCategory = it.toInternal()
+        qryCategory = it.toInternal(this)
     }
     return this
 }
+
+fun MpCategoryCreateDto.toInternal(ctx: MpBeContext): MpCategoryModel {
+    val intType = type.asEnumOrDefault(CategoryType.INVALID)
+    if ( intType == CategoryType.INVALID) {
+        ctx.errors.add( MpError( code = "MP-E-0010", message = "Недопустимое значение <$type>", field = "type" ))
+    }
+
+    return MpCategoryModel(
+        title = title ?: "",
+        code = code ?: "",
+        type = intType,
+        upRefId = upRefId?.let { MpCategoryIdModel(it) } ?: MpCategoryIdModel.NONE
+    )
+}
+
 
 /***********************************************************
  *  Read - DONE
@@ -86,6 +111,9 @@ fun MpBeContext.init(request: MpRequestCategoryRead): MpBeContext {
     return this
 }
 
+/***********************************************************
+ *  Update - TBD
+ ***********************************************************/
 fun MpBeContext.init(request: MpRequestCategoryUpdate): MpBeContext {
     request.updateData?.let { data ->
         this.qryCategory = MpCategoryModel(
@@ -146,13 +174,6 @@ fun MpCategoryDto.toInternal() = MpCategoryModel(
     code = code ?: "",
     //TODO
     //type = type.asEnumOrDefault()
-)
-
-fun MpCategoryCreateDto.toInternal() = MpCategoryModel(
-    title = title ?: "",
-    code = code ?: "",
-    //TODO
-    //type =
 )
 
 fun MpCategoryListFilterDto.toInternal(ctx: MpBeContext): MpCategoryListFilter {
