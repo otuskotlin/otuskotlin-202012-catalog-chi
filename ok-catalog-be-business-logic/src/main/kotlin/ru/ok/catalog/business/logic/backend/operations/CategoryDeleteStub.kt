@@ -11,21 +11,18 @@ import ru.ok.catalog.kmp.pipeline.IOperation
 import ru.ok.catalog.kmp.pipeline.operation
 import ru.ok.catalog.kmp.pipeline.pipeline
 
-object CategoryCreateStub: IOperation<MpBeContext> by pipeline ({
+object CategoryDeleteStub: IOperation<MpBeContext> by pipeline ({
     startIf { stubCase != MpStubCase.NONE }
 
-    //успешное создание
+    //успешное чтение
     operation {
         startIf {
-            stubCase == MpStubCase.CATEGORY_CREATE_SUCCESS
+            stubCase == MpStubCase.CATEGORY_DELETE_SUCCESS
         }
         execute {
             resCategory = MpCategoryModel(
-                id = MpCategoryIdModel("cat-72"),
-                title = qryCategory.title,
-                code = qryCategory.code,
-                upRefId = qryCategory.upRefId,
-                type = qryCategory.type,
+                id = MpCategoryIdModel(qryCategoryId.id),
+                title = "Здесь будут реквизиты удаленной записи",
             )
             status = MpBeContextStatus.FINISHING
         }
@@ -34,12 +31,12 @@ object CategoryCreateStub: IOperation<MpBeContext> by pipeline ({
     //ошибка
     operation {
         startIf {
-            stubCase == MpStubCase.CATEGORY_CREATE_ERROR
+            stubCase == MpStubCase.CATEGORY_DELETE_ERROR
         }
         execute {
             errors = mutableListOf(
                 MpError(
-                    code = "MP-E-0011",
+                    code = "MP-E-0021",
                     message = "Уou asked for error, you got it",
                     level = IMpError.Level.ERROR,
                     field = "someField",
@@ -53,10 +50,10 @@ object CategoryCreateStub: IOperation<MpBeContext> by pipeline ({
     //исключение
     operation {
         startIf {
-            stubCase == MpStubCase.CATEGORY_CREATE_EXCEPTION
+            stubCase == MpStubCase.CATEGORY_DELETE_EXCEPTION
         }
         execute {
-            throw RuntimeException("MP-E-0023"+" Уou asked for exception, you got it")
+            throw RuntimeException("MP-E-0022"+" Уou asked for exception, you got it")
         }
     }
 

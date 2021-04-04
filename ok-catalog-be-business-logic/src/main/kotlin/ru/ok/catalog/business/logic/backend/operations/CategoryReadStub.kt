@@ -53,7 +53,7 @@ object CategoryReadStub: IOperation<MpBeContext> by pipeline ({
             stubCase == MpStubCase.CATEGORY_READ_EXCEPTION
         }
         execute {
-            throw RuntimeException("Уou asked for exception, you got it")
+            throw RuntimeException("MP-E-0024"+" Уou asked for exception, you got it")
         }
     }
 

@@ -90,6 +90,7 @@ fun MpBeContext.init(request: MpRequestCategoryRead): MpBeContext {
     if ( requestId == "") {
         errors.add( MpError( code = "MP-E-0001", message = "Не задан requestId", field = "requestId" ))
     }
+
     stubCase = when(request.debug?.stubCase) {
         "SUCCESS" -> MpStubCase.CATEGORY_READ_SUCCESS
         "ERROR" -> MpStubCase.CATEGORY_READ_ERROR
@@ -129,7 +130,24 @@ fun MpBeContext.init(request: MpRequestCategoryUpdate): MpBeContext {
     return this
 }
 
+/***********************************************************
+ *  Delete - DONE
+ ***********************************************************/
 fun MpBeContext.init(request: MpRequestCategoryDelete): MpBeContext {
+    requestId = request.requestId ?: ""
+    if ( requestId == "") {
+        errors.add( MpError( code = "MP-E-0001", message = "Не задан requestId", field = "requestId" ))
+    }
+
+    stubCase = when(request.debug?.stubCase) {
+        "SUCCESS" -> MpStubCase.CATEGORY_DELETE_SUCCESS
+        "ERROR" -> MpStubCase.CATEGORY_DELETE_ERROR
+        "EXCEPTION" -> MpStubCase.CATEGORY_DELETE_EXCEPTION
+        null -> MpStubCase.NONE
+        else -> MpStubCase.INVALID
+    }
+
+    //поля нижет валидируются в транспонтно-независимой библиотеке
     this.qryCategoryId = if ( request.categoryId == null ) {
         MpCategoryIdModel.NONE
     } else {
@@ -193,9 +211,6 @@ fun MpCategoryModel.toDto() =
         null
     } else {
         MpCategoryDto(
-            //someObject?.takeIf{ status }?.apply{ doThis() }
-            //someObject?.takeIf{ status }?.doThis()
-            //id = this.id.id.takeIf{it.isNotBlank()},    //для преобразования пустых строк в null
             id = this.id.id.bnl(),
             title = this.title,
             code = this.code,

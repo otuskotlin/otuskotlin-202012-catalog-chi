@@ -4,6 +4,7 @@ import ru.ok.catalog.be.common.context.MpBeContext
 import ru.ok.catalog.business.logic.backend.pipelines.CategoryCreatePipeline
 import ru.ok.catalog.business.logic.backend.pipelines.CategoryListPipeline
 import ru.ok.catalog.business.logic.backend.pipelines.CategoryReadPipeline
+import ru.ok.catalog.business.logic.backend.pipelines.CategoryDeletePipeline
 
 /**
  * Transport Independent Category API
@@ -19,5 +20,7 @@ class CategoryTiApi {
         CategoryReadPipeline.execute(context)
     }
     suspend fun update(context: MpBeContext) {}
-    suspend fun delete(context: MpBeContext) {}
+    suspend fun delete(context: MpBeContext) {
+        CategoryDeletePipeline.execute(context)
+    }
 }
