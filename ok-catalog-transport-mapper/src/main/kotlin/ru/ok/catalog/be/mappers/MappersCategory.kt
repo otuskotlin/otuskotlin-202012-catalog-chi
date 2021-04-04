@@ -6,43 +6,11 @@ import ru.ok.catalog.be.common.context.MpBeContextStatus
 import ru.ok.catalog.be.common.models.*
 import ru.ok.catalog.transport.kmp.models.category.*
 import ru.ok.catalog.transport.kmp.models.common.ResponseStatusDto
-import ru.ok.catalog.transport.kmp.models.common.StubCase
 
-//TODO реализовать или удалить
-//fun MpFrontContext.responded(data: MpResponseCategoryList) = apply {
-//    demands = data.demands?.map { it.toInternal() }?.toMutableList() ?: mutableListOf()
-//}
-//
-//fun MpFrontContext.responded(data: MpResponseCategoryCreate) = apply {
-//    demand = data.demand?.toInternal() ?: CategoryModel.NONE
-//}
-//
-//fun MpFrontContext.responded(data: MpResponseCategoryRead) = apply {
-//    demand = data.demand?.toInternal() ?: CategoryModel.NONE
-//}
-//
-//fun MpFrontContext.responded(data: MpResponseCategoryUpdate) = apply {
-//    demand = data.demand?.toInternal() ?: CategoryModel.NONE
-//}
-//
-//fun MpFrontContext.responded(data: MpResponseCategoryDelete) = apply {
-//    if (data.deleted == true) {
-//        demand = CategoryModel.NONE
-//    }
-//}
-
-//fun MpBeContext.init(request: IMpRequest) =
-//    when(request){
-//        is MpRequestCategoryCreate -> this.init(request)
-//        is MpRequestCategoryRead -> this.init(request)
-//        is MpRequestCategoryUpdate -> this.init(request)
-//        is MpRequestCategoryDelete -> this.init(request)
-//        else -> null
-//    }
 
 // В добротно сформированном сообщении об ошибке указываются
 // данные, которые привели к ощибке. Первичная валидация
-// делается здесь т.к. здесь эти данные "в руках".
+// делается здесь т.к. здесь эти данные есть и они "в руках".
 
 /***********************************************************
  *  Create - DONE
@@ -113,21 +81,42 @@ fun MpBeContext.init(request: MpRequestCategoryRead): MpBeContext {
 }
 
 /***********************************************************
- *  Update - TBD
+ *  Update - DONE
  ***********************************************************/
 fun MpBeContext.init(request: MpRequestCategoryUpdate): MpBeContext {
-    request.updateData?.let { data ->
-        this.qryCategory = MpCategoryModel(
-            title = data.title ?: "",
-            code = data.code ?: "",
-            //TODO: где делать валидацию type и возвращать ошибку?
-            type = CategoryType.valueOf(data.type ?: "NONE"),
-            upRefId = MpCategoryIdModel(data.upRefId ?: ""),
-            //TODO: валидация на непустое значение
-            id = MpCategoryIdModel(data.id ?: ""),
-        )
+    requestId = request.requestId ?: ""
+    if ( requestId == "") {
+        errors.add( MpError( code = "MP-E-0025", message = "Не задан requestId", field = "requestId" ))
     }
+
+    stubCase = when(request.debug?.stubCase) {
+        "SUCCESS" -> MpStubCase.CATEGORY_UPDATE_SUCCESS
+        "ERROR" -> MpStubCase.CATEGORY_UPDATE_ERROR
+        "EXCEPTION" -> MpStubCase.CATEGORY_UPDATE_EXCEPTION
+        null -> MpStubCase.NONE
+        else -> MpStubCase.INVALID
+    }
+
+    request.updateData?.let {
+        qryCategory = it.toInternal(this)
+    }
+
     return this
+}
+
+fun MpCategoryUpdateDto.toInternal(ctx: MpBeContext): MpCategoryModel {
+    val intType = type.asEnumOrDefault(CategoryType.INVALID)
+    if ( intType == CategoryType.INVALID) {
+        ctx.errors.add( MpError( code = "MP-E-0026", message = "Недопустимое значение <$type>", field = "type" ))
+    }
+
+    return MpCategoryModel(
+        id = id?.let { MpCategoryIdModel(it) } ?: MpCategoryIdModel.NONE,
+        title = title ?: "",
+        code = code ?: "",
+        type = intType,
+        upRefId = upRefId?.let { MpCategoryIdModel(it) } ?: MpCategoryIdModel.NONE
+    )
 }
 
 /***********************************************************
@@ -136,7 +125,7 @@ fun MpBeContext.init(request: MpRequestCategoryUpdate): MpBeContext {
 fun MpBeContext.init(request: MpRequestCategoryDelete): MpBeContext {
     requestId = request.requestId ?: ""
     if ( requestId == "") {
-        errors.add( MpError( code = "MP-E-0001", message = "Не задан requestId", field = "requestId" ))
+        errors.add( MpError( code = "MP-E-0033", message = "Не задан requestId", field = "requestId" ))
     }
 
     stubCase = when(request.debug?.stubCase) {
@@ -146,13 +135,12 @@ fun MpBeContext.init(request: MpRequestCategoryDelete): MpBeContext {
         null -> MpStubCase.NONE
         else -> MpStubCase.INVALID
     }
+    if ( stubCase == MpStubCase.INVALID) {
+        errors.add( MpError( code = "MP-E-0027", message = "Недопустимое значение <${request.debug?.stubCase}>", field = "stubCase" ))
+    }
 
     //поля нижет валидируются в транспонтно-независимой библиотеке
-    this.qryCategoryId = if ( request.categoryId == null ) {
-        MpCategoryIdModel.NONE
-    } else {
-        MpCategoryIdModel(request.categoryId!!)
-    }
+    this.qryCategoryId  = request.categoryId?.let { MpCategoryIdModel(it) } ?: MpCategoryIdModel.NONE
     return this
 }
 
@@ -176,10 +164,10 @@ fun MpBeContext.init(request: MpRequestCategoryList): MpBeContext {
         null -> MpStubCase.NONE
         else -> MpStubCase.INVALID
     }
-
     if ( stubCase == MpStubCase.INVALID) {
         errors.add( MpError( code = "MP-E-0005", message = "Недопустимое значение <${request.debug?.stubCase}>", field = "stubCase" ))
     }
+
     return this
 }
 
