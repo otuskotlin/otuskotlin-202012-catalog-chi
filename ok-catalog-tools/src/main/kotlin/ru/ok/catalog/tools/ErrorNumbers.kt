@@ -16,6 +16,8 @@ fun main() {
     val fileToProcess: MutableList<String> = mutableListOf();
     var totalProcessed: Int = 0
     val totalRenumber = false
+    val saveBak = false
+    val dup = mutableMapOf<String,Int>()
 
 
     fun scanFile(fileName: String): Int {
@@ -31,6 +33,7 @@ fun main() {
                         maxen = num.toInt()
                     if ( totalRenumber )
                         res = 1
+                    dup[num] = dup.getOrDefault(num, 0) + 1
                 } else {
                     res = 1
                 }
@@ -73,8 +76,10 @@ fun main() {
         }
         out.close()
         if ( processed > 0 ) {
-            File("$fileName.bak2").delete()
-            File(fileName).renameTo(File("$fileName.bak2"))
+            if ( saveBak ) {
+                File("$fileName.bak").delete()
+                File(fileName).renameTo(File("$fileName.bak"))
+            }
             File("$fileName.tmp").renameTo(File(fileName))
         }
 
@@ -98,6 +103,10 @@ fun main() {
     else
         maxen++
     println("Следующий свободный номер: $maxen")
+    dup.forEach { (key, value) ->
+        if ( value > 1 )
+            println("Дубликат MP-E-$key: $value раза")
+    }
     println("Файлов для обработки: ${fileToProcess.size}")
 
     if ( fileToProcess.size > 0 ) {
@@ -110,5 +119,6 @@ fun main() {
         println("Следующий свободный номер: $maxen")
     }
 }
+
 
 
