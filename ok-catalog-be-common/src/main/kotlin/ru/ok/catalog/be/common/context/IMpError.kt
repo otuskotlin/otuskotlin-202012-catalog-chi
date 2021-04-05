@@ -22,7 +22,8 @@ interface IMpError {
         FATAL(90),
         ERROR(70),
         WARN(40),
-        INFO(20);
+        INFO(20),
+        OFF(0);
 
         val isError: Boolean
             get() = weight >= ERROR.weight
