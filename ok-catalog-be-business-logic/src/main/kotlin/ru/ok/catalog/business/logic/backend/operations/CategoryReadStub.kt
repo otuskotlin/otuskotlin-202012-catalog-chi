@@ -21,7 +21,7 @@ object CategoryReadStub: IOperation<MpBeContext> by pipeline ({
         }
         execute {
             resCategory = MpCategoryModel(
-                id = MpCategoryIdModel(qryCategoryId.id),
+                id = qryCategoryId,
                 title = "Машиностроение",
             )
             status = MpBeContextStatus.FINISHING
