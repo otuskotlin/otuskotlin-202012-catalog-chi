@@ -3,11 +3,10 @@ package ru.ok.catalog.tools
 import java.io.File
 
 /**
- * ErrorNumbers - присвоение и перенумерация кодов ошибок
+ * ErrorNumbers - присвоение кодов ошибок
  *
- * Для присвоения номера новым ошибком в тексте программы код должно быть в таком виде: "MP-E-".
+ * Для присвоения номера новым ошибкам в тексте программы код должен быть в таком виде: "MP-E-".
  * Номера будут присвоены начиная с последнего номера +1.
- * Для полной перенумерации нужно установить переменную totalRenumber в true.
  * Note: номера присваиваются не типам ошибок а точкам выявления ошибок.
  */
 fun main() {
@@ -15,7 +14,6 @@ fun main() {
     var maxen = 0
     val fileToProcess: MutableList<String> = mutableListOf();
     var totalProcessed: Int = 0
-    val totalRenumber = false
     val saveBak = false
     val dup = mutableMapOf<String,Int>()
 
@@ -24,6 +22,8 @@ fun main() {
         val re = Regex("\"MP-E-(\\d*)");
         var res = 0
         var firstTime = true
+        val totalRenumber = false
+
         File(fileName).forEachLine {
             val match = re.find(it)
             if (match != null) {
