@@ -14,6 +14,7 @@ data class ErrorDto (
 
     @Serializable
     enum class ErrorLevelDto {
+        //TODO SUCCESS - кандидат на удаление
         SUCCESS,
         INFO,
         WARNING,

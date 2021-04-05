@@ -2,11 +2,7 @@ package ru.ok.catalog.transport.kmp.models.classification
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ru.ok.catalog.transport.kmp.models.category.MpCategoryListFilterDto
-import ru.ok.catalog.transport.kmp.models.common.EMpWorkModeDto
-import ru.ok.catalog.transport.kmp.models.common.IMpDebug
-import ru.ok.catalog.transport.kmp.models.common.IMpRequest
-import ru.ok.catalog.transport.kmp.models.common.MpMessage
+import ru.ok.catalog.transport.kmp.models.common.*
 
 @Serializable
 @SerialName("MpRequestClassificationList")
@@ -20,6 +16,7 @@ data class MpRequestClassificationList (
 ):    IMpRequest, MpMessage() {
     @Serializable
     data class Debug(
-        override val mode: EMpWorkModeDto?
+        override val mode: MpWorkModeDto?,
+        override val stubCase: String?
     ) : IMpDebug
 }

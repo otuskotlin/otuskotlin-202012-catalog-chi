@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":ok-catalog-be-common"))
     implementation(project(":ok-catalog-transport-main-mp"))
     implementation(project(":ok-catalog-transport-mapper"))
+    implementation(project(":ok-catalog-be-business-logic"))
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
     implementation("io.ktor:ktor-server-netty:$ktorVersion")

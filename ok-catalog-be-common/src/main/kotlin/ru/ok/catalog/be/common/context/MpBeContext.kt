@@ -1,9 +1,8 @@
 package ru.ok.catalog.be.common.context
 
-import ru.ok.catalog.be.common.models.MpCategoryIdModel
-import ru.ok.catalog.be.common.models.MpCategoryModel
-import ru.ok.catalog.be.common.models.MpClassificationIdModel
-import ru.ok.catalog.be.common.models.MpClassificationModel
+import ru.ok.catalog.be.common.models.*
+import ru.ok.catalog.transport.kmp.models.category.MpCategoryListFilter
+import ru.ok.catalog.transport.kmp.models.classification.MpClassificationListFilter
 
 /** Контекст служит контейнером для внутренних моделей
  * и используется в цепочке обработки запроса.
@@ -14,11 +13,22 @@ import ru.ok.catalog.be.common.models.MpClassificationModel
 
  **/
 data class MpBeContext(
-    var requestCategoryId: MpCategoryIdModel = MpCategoryIdModel.NONE,
-    var requestCategory: MpCategoryModel = MpCategoryModel.NONE,
-    var requestClassificationId: MpClassificationIdModel = MpClassificationIdModel.NONE,
-    var requestClassification: MpClassificationModel = MpClassificationModel.NONE,
+    var status: MpBeContextStatus = MpBeContextStatus.NONE,
+    var errors: MutableList<IMpError> = mutableListOf(),
+    var stubCase: MpStubCase = MpStubCase.NONE,
+    var requestId: String = "",
 
-    var responseCategory: MpCategoryModel = MpCategoryModel.NONE,
-    var responseClassification: MpClassificationModel = MpClassificationModel.NONE,
+    var qryCategoryId: MpCategoryIdModel = MpCategoryIdModel.NONE,
+    var qryCategory: MpCategoryModel = MpCategoryModel.NONE,
+    var qryCategoryFilter: MpCategoryListFilter = MpCategoryListFilter.NONE,
+
+    var qryClassificationId: MpClassificationIdModel = MpClassificationIdModel.NONE,
+    var qryClassification: MpClassificationModel = MpClassificationModel.NONE,
+    var qryClassificationFilter: MpClassificationListFilter = MpClassificationListFilter.NONE,
+
+
+    var resCategory: MpCategoryModel = MpCategoryModel.NONE,
+    var resCategories: MutableList<MpCategoryModel> = mutableListOf(),
+    var resClassification: MpClassificationModel = MpClassificationModel.NONE,
+    var resClassifications: MutableList<MpClassificationModel> = mutableListOf(),
 )

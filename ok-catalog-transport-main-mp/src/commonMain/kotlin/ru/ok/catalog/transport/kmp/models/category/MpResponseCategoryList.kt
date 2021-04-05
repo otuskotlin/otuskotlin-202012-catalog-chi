@@ -14,11 +14,12 @@ data class MpResponseCategoryList(
     override val status: ResponseStatusDto? = null,
     override val debug: Debug? = null,
     /** ниже специфика запроса **/
-    val categories: List<MpCategoryDto>?  = null,
+    val categories: List<MpCategoryDto?>? = null,
 ) : IMpResponse, MpMessage() {
 
     @Serializable
     data class Debug(
-        override val mode: EMpWorkModeDto?
+        override val mode: MpWorkModeDto?,
+        override val stubCase: String?
     ) : IMpDebug
 }

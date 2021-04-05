@@ -5,19 +5,12 @@ import io.ktor.http.*
 import io.ktor.features.*
 import io.ktor.html.*
 import kotlinx.html.*
-import io.ktor.content.*
 import io.ktor.http.content.*
 import io.ktor.application.*
 import io.ktor.response.*
-import io.ktor.request.*
 import io.ktor.serialization.*
-import ru.ok.catalog.controllers.MpCategoryController
-import ru.ok.catalog.controllers.MpClassificationController
-import ru.ok.catalog.transport.kmp.models.category.*
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationCreate
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationDelete
-import ru.ok.catalog.transport.kmp.models.classification.MpRequestClassificationList
-import ru.ok.catalog.transport.kmp.models.common.MpMessage
+import ru.ok.catalog.controllers.MpCategoryApiHttpAdapter
+import ru.ok.catalog.controllers.MpClassificationApiHttpAdapter
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -29,8 +22,8 @@ fun main(args: Array<String>): Unit =
 @Suppress("unused") // Referenced in application.conf
 @kotlin.jvm.JvmOverloads
 fun Application.module(testing: Boolean = false) {
-    val categoryControler = MpCategoryController()
-    val classificationControler = MpClassificationController()
+    val categoryHttpApi = MpCategoryApiHttpAdapter()
+    val classificationHttpApi = MpClassificationApiHttpAdapter()
 
     install(CORS) {
         method(HttpMethod.Options)
@@ -91,17 +84,17 @@ fun Application.module(testing: Boolean = false) {
         }
 
         route("/category") {
-            post("/read") { categoryControler.read(this) }
-            post("/create") { categoryControler.create(this) }
-            post("/update") { categoryControler.update(this) }
-            post("/delete") { categoryControler.delete(this) }
-            post("/list") { categoryControler.list(this) }
+            post("/read")   { categoryHttpApi.read(this) }
+            post("/create") { categoryHttpApi.create(this) }
+            post("/update") { categoryHttpApi.update(this) }
+            post("/delete") { categoryHttpApi.delete(this) }
+            post("/list")   { categoryHttpApi.list(this) }
         }
 
         route("/classification") {
-            post("/create") { classificationControler.create(this) }
-            post("/delete") { classificationControler.delete(this) }
-            post("/list") { classificationControler.list(this) }
+            post("/create") { classificationHttpApi.create(this) }
+            post("/delete") { classificationHttpApi.delete(this) }
+            post("/list")   { classificationHttpApi.list(this) }
         }
     }
 }

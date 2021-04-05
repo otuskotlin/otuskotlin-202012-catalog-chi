@@ -15,6 +15,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation(project(":ok-catalog-be-common"))
     implementation(project(":ok-catalog-transport-main-mp"))
+    //implementation(project(":ok-catalog-transport-mapper"))
 
     //testImplementation(kotlin("test"))
     //в одноплатформенных проектах рекомендуется использовать Junit 5

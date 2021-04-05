@@ -12,12 +12,12 @@ class ValidationTest {
         var res = validator.validate("")
         assertEquals(false, res.isSuccess)
         assertTrue("Must contain \"empty\"") {
-            res.errors.map { it.message }.first().contains("empty")
+            res.errors.map { it.message }.first().contains("не должно быть пустым")
         }
         res = "".validate(validator)
         assertEquals(false, res.isSuccess)
         assertTrue("Must contain \"empty\"") {
-            res.errors.map { it.message }.first().contains("empty")
+            res.errors.map { it.message }.first().contains("не должно быть пустым")
         }
     }
 
@@ -46,7 +46,7 @@ class ValidationTest {
         var res = validator.validate(child)
         assertEquals(false, res.isSuccess)
         assertTrue("must not be empty"){
-            res.errors.filter { it.message.contains("empty") }.isNotEmpty()
+            res.errors.filter { it.message.contains("не должно быть пустым") }.isNotEmpty()
         }
         assertTrue("must be in range"){
             res.errors.filter { it.message.contains("must be in range") }.isNotEmpty()

@@ -2,8 +2,6 @@ package ru.ok.catalog.transport.kmp.models.classification
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ru.ok.catalog.transport.kmp.models.category.MpCategoryCreateDto
-import ru.ok.catalog.transport.kmp.models.category.MpCategoryDto
 import ru.ok.catalog.transport.kmp.models.common.*
 
 @Serializable
@@ -18,7 +16,8 @@ data class MpRequestClassificationCreate(
 ) : IMpRequest, MpMessage() {
     @Serializable
     data class Debug(
-        override val mode: EMpWorkModeDto?
+        override val mode: MpWorkModeDto?,
+        override val stubCase: String?
     ) : IMpDebug
 
 //    override fun toString(): String {

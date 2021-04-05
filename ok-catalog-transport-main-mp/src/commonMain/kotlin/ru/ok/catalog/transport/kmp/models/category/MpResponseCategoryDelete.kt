@@ -19,6 +19,7 @@ data class MpResponseCategoryDelete(
 
     @Serializable
     data class Debug(
-        override val mode: EMpWorkModeDto?
+        override val mode: MpWorkModeDto?,
+        override val stubCase: String?
     ) : IMpDebug
 }
