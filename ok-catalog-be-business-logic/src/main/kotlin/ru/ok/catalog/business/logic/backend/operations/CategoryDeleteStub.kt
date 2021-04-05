@@ -21,7 +21,7 @@ object CategoryDeleteStub: IOperation<MpBeContext> by pipeline ({
         }
         execute {
             resCategory = MpCategoryModel(
-                id = MpCategoryIdModel(qryCategoryId.id),
+                id = qryCategoryId,
                 title = "Здесь будут реквизиты удаленной записи",
             )
             status = MpBeContextStatus.FINISHING
