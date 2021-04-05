@@ -16,13 +16,13 @@ fun main() {
     var totalProcessed: Int = 0
     val saveBak = false
     val dup = mutableMapOf<String,Int>()
+    val totalRenumber = false   //не использовать!
 
 
     fun scanFile(fileName: String): Int {
         val re = Regex("\"MP-E-(\\d*)");
         var res = 0
         var firstTime = true
-        val totalRenumber = false
 
         File(fileName).forEachLine {
             val match = re.find(it)
