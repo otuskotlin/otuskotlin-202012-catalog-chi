@@ -53,7 +53,11 @@ internal class CategoryApiHttpDeleteTest {
                     requestId = "req-13",
                     debug = MpRequestCategoryDelete.Debug(
                         mode = MpWorkModeDto.STUB,
-                        stubCase = "ERROR"
+                        stubCase = "ERROR",
+                        stubParams = mapOf<String,String>(
+                            "message" to "some error from fe",
+                            "code" to "E-02"
+                        ),
                     ),
                     categoryId = "cat-57"
                 )
@@ -72,6 +76,9 @@ internal class CategoryApiHttpDeleteTest {
                     ?: fail("Incorrect response format")
 
                 assertEquals(ResponseStatusDto.ERROR, res.status)
+                assertEquals(1, res.errors?.filter {
+                    it.message =="some error from fe" && it.code == "E-02"
+                }?.size)
             }
         }
     }
