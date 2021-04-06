@@ -17,7 +17,8 @@ class ValidatorBIC: IValidator<String> {
         fun addErr(errText: String) {
             errFound.add(
                 ValidationDefaultError(
-                    message = errText
+                    message = errText,
+                    code = "E-01"
                 )
             )
         }
@@ -54,7 +55,8 @@ class ValidatorAccountRU: IValidator<Account> {
         fun addErr(errText: String) {
             errFound.add(
                 ValidationDefaultError(
-                    message = errText
+                    message = errText,
+                    code = "E-02"
                 )
             )
         }
