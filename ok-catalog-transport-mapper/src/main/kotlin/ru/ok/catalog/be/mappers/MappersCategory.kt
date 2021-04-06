@@ -32,8 +32,27 @@ fun MpBeContext.preInit(request: IMpRequest): MpBeContext {
 Общая проверка результатов инициализации для всех типов запросов
  */
 fun MpBeContext.check(request: IMpRequest): MpBeContext {
-    if ( stubCase == MpStubCase.INVALID) {
-        errors.add( MpError( code = "MP-E-0027", message = "Недопустимое значение <${request.debug?.stubCase}>", field = "stubCase" ))
+    if ( request.debug?.stubCase == "STUB_ERROR" ) {
+        errors = listOf<MpError>(
+            MpError(
+                code = stubParams.getOrDefault("code", "MP-E-0036"),
+                message = stubParams.getOrDefault("message", "Вы можете указать параметр message с нужным вам текстом сообщения, а также параметры code, field, level, group"),
+                level = stubParams.getOrDefault("level", "").asEnumOrDefault(IMpError.Level.ERROR),
+                field = stubParams.getOrDefault("field", ""),
+                group = stubParams.getOrDefault("group", "").asEnumOrDefault(IMpError.Group.VALIDATION)
+            )
+        ).toMutableList()
+
+    } else {
+        if (stubCase == MpStubCase.INVALID) {
+            errors.add(
+                MpError(
+                    code = "MP-E-0027",
+                    message = "Недопустимое значение <${request.debug?.stubCase}>",
+                    field = "stubCase"
+                )
+            )
+        }
     }
 
     return this

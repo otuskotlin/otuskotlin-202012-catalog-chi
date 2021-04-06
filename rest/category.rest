@@ -45,6 +45,28 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8081/category/delete
+Content-Type: application/json
+
+{
+  "type": "MpRequestCategoryDelete",
+  "requestId": "req-13",
+  "debug": {
+    "mode": "STUB",
+    "stubCase": "STUB_ERROR",
+    "stubParams": {
+      "code": "E-01",
+      "message": "My message",
+      "field": "someField",
+      "level": "WARN",
+      "group": "NONE"
+
+    }
+  },
+  "categoryId": "cat-57"
+}
+
+###
 POST http://localhost:8081/category/list
 Content-Type: application/json
 

@@ -21,19 +21,5 @@ object CategoryDeletePipeline: IOperation<MpBeContext> by pipeline ({
         }
     }
 
-    validation {
-        validate<String> {
-            validator( ValidatorStringNotEmpty( code = "MP-E-0034", field = "stub1" ) )
-            on { "" }
-        }
-    }
-
-    validation {
-        validate<String> {
-            validator( ValidatorStringNotEmpty( code = "MP-E-0035", field = "stub2" ) )
-            on { "" }
-        }
-    }
-
     execute(PipelineFinalizeOperation)
 })
