@@ -21,7 +21,7 @@ object CategoryDeleteStub: IOperation<MpBeContext> by pipeline ({
         }
         execute {
             resCategory = MpCategoryModel(
-                id = MpCategoryIdModel(qryCategoryId.id),
+                id = qryCategoryId,
                 title = "Здесь будут реквизиты удаленной записи",
             )
             status = MpBeContextStatus.FINISHING
@@ -36,8 +36,8 @@ object CategoryDeleteStub: IOperation<MpBeContext> by pipeline ({
         execute {
             errors = mutableListOf(
                 MpError(
-                    code = "MP-E-0021",
-                    message = "Уou asked for error, you got it",
+                    code = stubParams.getOrDefault("code", "MP-E-0021"),
+                    message = stubParams.getOrDefault("message", "Уou asked for error, you got it"),
                     level = IMpError.Level.ERROR,
                     field = "someField",
                     group = IMpError.Group.VALIDATION

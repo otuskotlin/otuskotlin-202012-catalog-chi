@@ -16,6 +16,7 @@ data class MpBeContext(
     var status: MpBeContextStatus = MpBeContextStatus.NONE,
     var errors: MutableList<IMpError> = mutableListOf(),
     var stubCase: MpStubCase = MpStubCase.NONE,
+    var stubParams: Map<String,String> = mapOf(),
     var requestId: String = "",
 
     var qryCategoryId: MpCategoryIdModel = MpCategoryIdModel.NONE,

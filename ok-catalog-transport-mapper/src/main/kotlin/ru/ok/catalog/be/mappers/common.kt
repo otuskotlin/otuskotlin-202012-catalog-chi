@@ -13,6 +13,7 @@ fun IMpError.toDto() =
             IMpError.Level.WARN -> ErrorDto.ErrorLevelDto.WARNING
             IMpError.Level.ERROR -> ErrorDto.ErrorLevelDto.ERROR
             IMpError.Level.FATAL -> ErrorDto.ErrorLevelDto.ERROR
+            IMpError.Level.OFF -> ErrorDto.ErrorLevelDto.INFO
         },
         group = group.toString()
     )

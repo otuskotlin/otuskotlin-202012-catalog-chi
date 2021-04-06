@@ -14,7 +14,9 @@ import ru.ok.catalog.transport.kmp.models.common.MpMessage
 import java.time.Instant
 import ru.ok.catalog.be.common.context.MpBeContext
 import ru.ok.catalog.be.common.context.MpBeContextStatus
+import ru.ok.catalog.be.mappers.check
 import ru.ok.catalog.be.mappers.init
+import ru.ok.catalog.be.mappers.preInit
 import ru.ok.catalog.be.mappers.toDto
 
 class MpCategoryApiHttpAdapter (
@@ -30,7 +32,7 @@ class MpCategoryApiHttpAdapter (
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryCreate  //TBD
             requestId = req.requestId
             //преобразовать в контекст
-            val ctx = MpBeContext().init(req)
+            val ctx = MpBeContext().preInit(req).init(req).check(req)
             //вызвать pipeline
             if ( ctx.errors.size == 0 )
                 tiApi.create(ctx)
@@ -75,7 +77,7 @@ class MpCategoryApiHttpAdapter (
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryRead  //TBD
             requestId = req.requestId
             //преобразовать в контекст
-            val ctx = MpBeContext().init(req)
+            val ctx = MpBeContext().preInit(req).init(req).check(req)
             if ( ctx.errors.size == 0 )
                 tiApi.read(ctx)
             else
@@ -118,7 +120,7 @@ class MpCategoryApiHttpAdapter (
         try {
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryUpdate  //TBD
             requestId = req.requestId
-            val ctx = MpBeContext().init(req)
+            val ctx = MpBeContext().preInit(req).init(req).check(req)
             if ( ctx.errors.size == 0 )
                 tiApi.update(ctx)
             else
@@ -159,7 +161,7 @@ class MpCategoryApiHttpAdapter (
         try {
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryDelete    //TBD
             requestId = req.requestId
-            val ctx = MpBeContext().init(req)
+            val ctx = MpBeContext().preInit(req).init(req).check(req).check(req)
             if ( ctx.errors.size == 0 )
                 tiApi.delete(ctx)
             else
@@ -200,7 +202,7 @@ class MpCategoryApiHttpAdapter (
         try {
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryList  //TBD
             requestId = req.requestId
-            val ctx = MpBeContext().init(req)
+            val ctx = MpBeContext().preInit(req).init(req).check(req)
             if ( ctx.errors.size == 0 )
                 tiApi.list(ctx)
             else

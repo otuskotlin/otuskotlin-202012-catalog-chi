@@ -6,6 +6,10 @@ import ru.ok.catalog.kmp.pipeline.IOperation
 import ru.ok.catalog.kmp.pipeline.operation
 
 object PipelineInitOperation: IOperation<MpBeContext> by operation ({
-    execute { status= MpBeContextStatus.RUNNING }
+    execute {
+        if ( status == MpBeContextStatus.NONE ) {
+            status = MpBeContextStatus.RUNNING
+        }
+    }
 })
 

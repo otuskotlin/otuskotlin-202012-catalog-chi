@@ -19,7 +19,8 @@ data class MpRequestCategoryDelete(
     @Serializable
     data class Debug(
         override val mode: MpWorkModeDto?,
-        override val stubCase: String?
+        override val stubCase: String?,
+        override val stubParams: Map<String, String>? = null
     ) : IMpDebug
 }
 
