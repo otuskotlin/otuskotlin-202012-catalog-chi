@@ -161,7 +161,7 @@ class MpCategoryApiHttpAdapter (
         try {
             val req = pipelineContext.call.receive<MpMessage>() as MpRequestCategoryDelete    //TBD
             requestId = req.requestId
-            val ctx = MpBeContext().preInit(req).init(req).check(req).check(req)
+            val ctx = MpBeContext().preInit(req).init(req).check(req)
             if ( ctx.errors.size == 0 )
                 tiApi.delete(ctx)
             else
